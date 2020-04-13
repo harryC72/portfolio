@@ -5,6 +5,8 @@ import path from "path";
 
 import blogPostRoutes from "./routes/blogPosts";
 import projectRoutes from "./routes/projects";
+import userRoutes from "./routes/users";
+import authRoutes from "./routes/auth";
 
 const app = express();
 
@@ -28,6 +30,8 @@ mongoose
 
 app.use("/blogposts", blogPostRoutes);
 app.use("/projects", projectRoutes);
+app.use("/users", userRoutes);
+app.use("/auth", authRoutes);
 
 app.get("/", (req, res, next) => {
   res.send("Hello new world!");

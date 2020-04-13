@@ -1,17 +1,19 @@
 import { Router } from "express";
-import blogPost from "../models/blogPost";
+import blogPost from "../models/BlogPost";
+
+import auth from "../middleware/auth.js";
 
 const router = Router();
 
 router.get("/", (req, res) => {
   blogPost
     .find()
-    .then(data => {
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error occurred while getting blog posts"
+        message: err.message || "Some error occurred while getting blog posts",
       });
     });
 });
@@ -19,48 +21,48 @@ router.get("/", (req, res) => {
 router.get("/:id", (req, res) => {
   blogPost
     .find({ _id: req.params.id })
-    .then(data => {
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error occurred while getting blog posts"
+        message: err.message || "Some error occurred while getting blog posts",
       });
     });
 });
 
-router.post("/", (req, res) => {
+router.post("/", auth, (req, res) => {
   // Validate request
   if (!req.body.bodyText) {
     return res.status(400).send({
-      message: "Blogpost body text can not be empty"
+      message: "Blogpost body text can not be empty",
     });
   }
 
   const post = new blogPost({
     title: req.body.title || "Untitled Note",
-    bodyText: req.body.bodyText
+    bodyText: req.body.bodyText,
   });
 
   post
     .save()
-    .then(data => {
+    .then((data) => {
       console.log("data", data);
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the blog post."
+          err.message || "Some error occurred while creating the blog post.",
       });
     });
 });
 
-router.put("/:id", (req, res) => {
+router.put("/:id", auth, (req, res) => {
   // Validate request
   if (!req.body.bodyText) {
     return res.status(400).send({
-      message: "Blogpost body text can not be empty"
+      message: "Blogpost body text can not be empty",
     });
   }
 
@@ -71,33 +73,33 @@ router.put("/:id", (req, res) => {
       { upsert: true } // add document with req.body._id if not exists
     )
 
-    .then(data => {
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the blog post."
+          err.message || "Some error occurred while creating the blog post.",
       });
     });
 });
 
-router.delete("/:id", (req, res, next) => {
+router.delete("/:id", auth, (req, res, next) => {
   blogPost
     .findByIdAndDelete({
       _id: req.params.id,
       function(err, post) {
         if (err) return next(err);
         res.json(post);
-      }
+      },
     })
-    .then(data => {
+    .then((data) => {
       res.send(data);
     })
-    .catch(err => {
+    .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while trying to delete the post"
+          err.message || "Some error occurred while trying to delete the post",
       });
     });
 });
