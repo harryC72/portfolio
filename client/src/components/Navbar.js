@@ -7,39 +7,40 @@ import {
   IconButton,
   Typography,
   Hidden,
-  Box
+  Box,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import ReactRouter from "./ReactRouter";
 import { theme1, theme2, theme3 } from "../theme";
+import { ConnectedLogout } from "../components/auth/Logout";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   appbarHome: {
     background: "transparent",
-    boxShadow: "none"
+    boxShadow: "none",
   },
   centerNavs: {
     display: "flex",
-    justifyContent: "center"
+    justifyContent: "center",
   },
 
   menuButton: {
-    marginRight: theme.spacing(2)
+    marginRight: theme.spacing(2),
   },
   titleHome: {
     flexGrow: 1,
-    background: "transparent"
+    background: "transparent",
   },
   title: {
     flexGrow: 1,
-    color: "white"
+    color: "white",
   },
   nav: {
-    textDecoration: "none"
-  }
+    textDecoration: "none",
+  },
 }));
 
 function Navbar({ theme }) {
@@ -55,6 +56,10 @@ function Navbar({ theme }) {
 
     if (path === "/projects") {
       return theme2;
+    }
+
+    if (path === "/register" || path === "/login") {
+      return theme3;
     }
 
     if (path === "/") {
@@ -118,6 +123,26 @@ function Navbar({ theme }) {
                   Projects
                 </Typography>
               </NavLink>
+              <NavLink to="/register" className={classes.nav}>
+                <Typography
+                  variant="h6"
+                  className={path === "/" ? classes.homeTitel : classes.title}
+                  style={path === "/" ? { color: "grey" } : null}
+                >
+                  Register
+                </Typography>
+              </NavLink>
+              <ConnectedLogout>
+                <NavLink to="#" className={classes.nav}>
+                  <Typography
+                    variant="h6"
+                    className={path === "/" ? classes.homeTitel : classes.title}
+                    style={path === "/" ? { color: "grey" } : null}
+                  >
+                    Logout
+                  </Typography>
+                </NavLink>
+              </ConnectedLogout>
             </Box>
           </Toolbar>
         </AppBar>

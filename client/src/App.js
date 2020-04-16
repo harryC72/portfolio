@@ -1,16 +1,14 @@
 import React, { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import { StylesProvider } from "@material-ui/core/styles";
 import { loadUser } from "./flux/actions/authActions";
+import { connect } from "react-redux";
 
-function App() {
-  const dispatch = useDispatch();
-
+function App({ loadUser }) {
   useEffect(() => {
-    dispatch.loadUser();
-  }, []);
+    loadUser();
+  }, [loadUser]);
   return (
     <div className="App">
       <StylesProvider injectFirst>
@@ -20,4 +18,8 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  auth: state.blogPost,
+});
+
+export default connect(mapStateToProps, { loadUser })(App);

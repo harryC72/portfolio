@@ -4,6 +4,8 @@ import Home from "./Home";
 import Blog from "./Blog";
 import Projects from "./Projects";
 import BlogUpdate from "./BlogUpdate";
+import Register from "./auth/Register";
+import { ConnectedLogin } from "./auth/Login";
 
 const ReactRouter = () => {
   return (
@@ -13,6 +15,8 @@ const ReactRouter = () => {
         <Route path="/blog" component={Blog} />
         <Route path="/projects" component={Projects} />
         <Route path="/updateBlogPost/:id" component={BlogUpdate} />
+        <Route path="/register" component={Register} />
+        <Route path="/login" component={ConnectedLogin} />
       </Switch>
     </Fragment>
   );

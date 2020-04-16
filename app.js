@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import "dotenv/config";
 import path from "path";
+import cors from "cors";
 
 import blogPostRoutes from "./routes/blogPosts";
 import projectRoutes from "./routes/projects";
@@ -18,6 +19,8 @@ const db = `${mongoUri}/${dbName}`;
 console.log("db", db);
 
 app.use(express.json());
+
+app.use(cors());
 
 mongoose
   .connect(db, {

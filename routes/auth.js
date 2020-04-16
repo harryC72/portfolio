@@ -10,14 +10,14 @@ const secret = process.env.JWT_SECRET;
 
 router.post("/register", async (req, res) => {
   const { name, email, password } = req.body;
-
+  console.log("USER", req.body);
   if (!name || !email || !password) {
     return res.status(400).json({ msg: "Please enter all fields" });
   }
 
   try {
     const user = await User.findOne({ email });
-    if (user) throw Error("User already exists");
+    if (user) res.status(400).json({ msg: "User already exists" });
 
     const newUser = new User({
       name,
@@ -44,7 +44,7 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-  const { name, email, password } = req.body;
+  const { email, password } = req.body;
 
   if (!email || !password) {
     return res.status(400).json({ msg: "Please enter all fields" });
@@ -52,17 +52,16 @@ router.post("/login", async (req, res) => {
 
   try {
     const user = await User.findOne({ email });
-    if (!user) return res.status(500).send("User not found");
+    if (!user) throw Error("User Does not exist");
 
     let hashedPassword = md5(password);
 
     let passwordCorrect = hashedPassword === user.passwordHash;
 
-    if (!passwordCorrect) {
-      return res.status(500).send("Password incorrect!");
-    }
+    if (!passwordCorrect) throw Error("Password incorrect!");
 
     const token = jwt.sign({ id: user._id }, secret, { expiresIn: 3600 });
+    if (!token) throw Error("Couldnt sign the token");
 
     res.status(200).json({
       token,
@@ -73,7 +72,7 @@ router.post("/login", async (req, res) => {
       },
     });
   } catch (e) {
-    res.status(400).json({ error: e.message });
+    res.status(400).json({ msg: e.message });
   }
 });
 
