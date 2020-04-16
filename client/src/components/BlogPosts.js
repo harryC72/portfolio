@@ -5,12 +5,13 @@ import { getBlogPosts, deleteBlogPost } from "../flux/actions/blogPostActions";
 import { connect } from "react-redux";
 import { Box } from "@material-ui/core";
 
-function BlogPosts({ getBlogPosts, blogPost, deleteBlogPost }) {
+function BlogPosts({ getBlogPosts, blogPost, deleteBlogPost, auth }) {
   useEffect(() => {
     getBlogPosts();
   }, [getBlogPosts]);
 
   let { blogPosts } = blogPost;
+  const { isAuthenticated } = auth;
 
   return (
     <Fragment>
@@ -23,6 +24,7 @@ function BlogPosts({ getBlogPosts, blogPost, deleteBlogPost }) {
               bodyText={bodyText}
               deleteId={_id}
               deletePost={deleteBlogPost}
+              isAuth={isAuthenticated}
             />
           </Box>
         );
@@ -33,6 +35,7 @@ function BlogPosts({ getBlogPosts, blogPost, deleteBlogPost }) {
 
 const mapStateToProps = (state) => ({
   blogPost: state.blogPost,
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, {

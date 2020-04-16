@@ -42,8 +42,10 @@ export const tokenConfig = (getState) => {
   };
 
   if (token) {
-    config.headers["x-auth-roken"] = token;
+    config.headers["x-auth-token"] = token;
   }
+
+  console.log("CONFIG", config);
 
   return config;
 };

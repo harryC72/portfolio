@@ -84,7 +84,7 @@ router.put("/:id", auth, (req, res) => {
     });
 });
 
-router.delete("/:id", auth, (req, res, next) => {
+router.delete("/:id", auth, (req, res) => {
   blogPost
     .findByIdAndDelete({
       _id: req.params.id,

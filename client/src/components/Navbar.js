@@ -12,7 +12,6 @@ import {
 import MenuIcon from "@material-ui/icons/Menu";
 import ReactRouter from "./ReactRouter";
 import { theme1, theme2, theme3 } from "../theme";
-import { ConnectedLogout } from "../components/auth/Logout";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -123,7 +122,7 @@ function Navbar({ theme }) {
                   Projects
                 </Typography>
               </NavLink>
-              <NavLink to="/register" className={classes.nav}>
+              {/* <NavLink to="/register" className={classes.nav}>
                 <Typography
                   variant="h6"
                   className={path === "/" ? classes.homeTitel : classes.title}
@@ -131,18 +130,7 @@ function Navbar({ theme }) {
                 >
                   Register
                 </Typography>
-              </NavLink>
-              <ConnectedLogout>
-                <NavLink to="#" className={classes.nav}>
-                  <Typography
-                    variant="h6"
-                    className={path === "/" ? classes.homeTitel : classes.title}
-                    style={path === "/" ? { color: "grey" } : null}
-                  >
-                    Logout
-                  </Typography>
-                </NavLink>
-              </ConnectedLogout>
+              </NavLink> */}
             </Box>
           </Toolbar>
         </AppBar>

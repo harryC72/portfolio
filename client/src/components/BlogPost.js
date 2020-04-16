@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { NavLink } from "react-router-dom";
 import {
@@ -6,7 +6,7 @@ import {
   CardActionArea,
   CardMedia,
   CardContent,
-  Button
+  Button,
 } from "@material-ui/core/";
 
 import Typography from "@material-ui/core/Typography";
@@ -14,11 +14,11 @@ import Typography from "@material-ui/core/Typography";
 const styles = {
   root: {
     width: 345,
-    margin: "50px 0"
+    margin: "50px 0",
   },
   media: {
-    height: 140
-  }
+    height: 140,
+  },
 };
 
 function MediaCard({
@@ -28,11 +28,19 @@ function MediaCard({
   bodyText,
   deletePost,
   deleteId,
-  shuffling
+  shuffling,
+  isAuth,
 }) {
-  const deleting = id => {
+  const deleting = (id) => {
     deletePost(id);
   };
+
+  const authButtons = (
+    <Fragment>
+      <Button onClick={() => deleting(deleteId)}>Delete</Button>
+      <NavLink to={`/updateBlogPost/${deleteId}`}>Update</NavLink>
+    </Fragment>
+  );
 
   return (
     <Card className={classes.root}>
@@ -52,8 +60,7 @@ function MediaCard({
           </Typography>
         </CardContent>
       </CardActionArea>
-      <Button onClick={() => deleting(deleteId)}>Delete</Button>
-      <NavLink to={`/updateBlogPost/${deleteId}`}>Update</NavLink>
+      {isAuth ? authButtons : null}
     </Card>
   );
 }

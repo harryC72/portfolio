@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react";
 import { useInput } from "../../hooks/inputHook";
-
+import { useHistory } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import { TextField, Button } from "@material-ui/core/";
@@ -17,6 +17,7 @@ const styles = {
 };
 
 const Login = ({ isAuthenticated, error, classes, login, errStatus }) => {
+  let history = useHistory();
   useEffect(() => {
     // Check for register error
     console.log("ERROR", error.id);
@@ -39,6 +40,8 @@ const Login = ({ isAuthenticated, error, classes, login, errStatus }) => {
       password,
     };
     login(loginUser);
+    history.push("/");
+
     clearErrors();
   };
 
