@@ -5,6 +5,11 @@ import AuthBar from "./components/AuthBar";
 import { StylesProvider } from "@material-ui/core/styles";
 import { loadUser } from "./flux/actions/authActions";
 import { connect } from "react-redux";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fab } from "@fortawesome/free-brands-svg-icons";
+// import { faGithubSquare, faLinkedin } from "@fortawesome/free-brands-svg-icons";
+
+library.add(fab);
 
 function App({ loadUser }) {
   useEffect(() => {

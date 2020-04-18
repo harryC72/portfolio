@@ -2,26 +2,27 @@ import React, { Fragment } from "react";
 import { Typography, Box, Link } from "@material-ui/core/";
 import HaraldImage from "../images/Harald.jpg";
 import { withStyles } from "@material-ui/core/styles";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const styles = {
   image: {
     width: "200px",
     height: "200px",
     objectFit: "cover",
-    borderRadius: "50%"
+    borderRadius: "50%",
   },
   container: {
-    margin: "40px 0 50px 0"
+    margin: "40px 0 50px 0",
   },
 
   firstInfo: {
     lineHeight: "140%",
-    margin: 0
-  }
+    margin: 0,
+  },
 };
 
 function Home({ classes }) {
-  const preventDefault = event => event.preventDefault();
+  const preventDefault = (event) => event.preventDefault();
 
   return (
     <Fragment>
@@ -41,22 +42,23 @@ function Home({ classes }) {
           </Typography>
         </Box>
       </Box>
+
       <Box display="flex" justifyContent="center">
         <Box width="10%" justifyContent="space-between" display="flex">
           <Link
             href="https://www.linkedin.com/in/harald-carlsten-10a3b715/"
             target="_blank"
           >
-            <i
-              className="fab fa-linkedin"
+            <FontAwesomeIcon
+              icon={["fab", "linkedin"]}
               style={{ color: "#0e76a8", fontSize: "32px" }}
-            ></i>
+            ></FontAwesomeIcon>
           </Link>
           <Link href="https://github.com/harryC72" target="_blank">
-            <i
-              className="fab fa-github-square"
+            <FontAwesomeIcon
+              icon={["fab", "github"]}
               style={{ color: "#3E2C00", fontSize: "32px" }}
-            ></i>
+            ></FontAwesomeIcon>
           </Link>
         </Box>
       </Box>
