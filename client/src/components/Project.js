@@ -10,7 +10,6 @@ import {
   Link,
   Typography,
 } from "@material-ui/core/";
-import mokaImage from "../images/mokamokka.png";
 
 const useStyles = makeStyles({
   root: {
@@ -31,6 +30,7 @@ export default function MediaCard({
   icon3,
   deleteProject,
   deleteId,
+  isAuth,
 }) {
   const classes = useStyles();
 
@@ -43,9 +43,11 @@ export default function MediaCard({
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image={projectImage}
+          // image={projectImage}
           title={projectTitle}
-        />
+        >
+          <img src={`/images/${projectImage}`} alt="MokaMokka" />
+        </CardMedia>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {projectTitle}
@@ -66,7 +68,9 @@ export default function MediaCard({
           Learn More
         </Button>
       </CardActions>
-      <Button onClick={() => deleting(deleteId)}>Delete</Button>
+      {isAuth ? (
+        <Button onClick={() => deleting(deleteId)}>Delete</Button>
+      ) : null}
     </Card>
   );
 }

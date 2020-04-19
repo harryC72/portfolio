@@ -6,7 +6,7 @@ import { getProjects, deleteProject } from "../flux/actions/projectActions";
 import { connect } from "react-redux";
 
 function Projects(props) {
-  const { getProjects, project, deleteProject } = props;
+  const { getProjects, project, deleteProject, isAuthenticated } = props;
   useEffect(() => {
     getProjects();
   }, [getProjects]);
@@ -30,6 +30,7 @@ function Projects(props) {
               icon3={icon3}
               deleteProject={deleteProject}
               deleteId={_id}
+              isAuth={isAuthenticated}
             />
           );
         }
@@ -42,6 +43,7 @@ const mapStateToProps = (state) => {
   console.log("STATE", state.project);
   return {
     project: state.project,
+    auth: state.auth,
   };
 };
 export default connect(mapStateToProps, { getProjects, deleteProject })(

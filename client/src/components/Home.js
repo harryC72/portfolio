@@ -44,7 +44,7 @@ function Home({ classes }) {
       </Box>
 
       <Box display="flex" justifyContent="center">
-        <Box width="10%" justifyContent="space-between" display="flex">
+        <Box width="15%" justifyContent="space-between" display="flex">
           <Link
             href="https://www.linkedin.com/in/harald-carlsten-10a3b715/"
             target="_blank"
@@ -57,6 +57,15 @@ function Home({ classes }) {
           <Link href="https://github.com/harryC72" target="_blank">
             <FontAwesomeIcon
               icon={["fab", "github"]}
+              style={{ color: "#3E2C00", fontSize: "32px" }}
+            ></FontAwesomeIcon>
+          </Link>
+          <Link
+            href="https://stackoverflow.com/users/story/7866285"
+            target="_blank"
+          >
+            <FontAwesomeIcon
+              icon={["fab", "stack-overflow"]}
               style={{ color: "#3E2C00", fontSize: "32px" }}
             ></FontAwesomeIcon>
           </Link>

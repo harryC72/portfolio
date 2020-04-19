@@ -17,3 +17,4 @@ let projectSchema = new Schema({
 const blogPost = mongoose.model("project", projectSchema);
 
 export default blogPost;
+""
