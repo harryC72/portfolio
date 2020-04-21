@@ -55,6 +55,7 @@ function ProjectInput({ classes, addProject }) {
       icon3,
       icon4,
     };
+    console.log("Newproject before posting", newProject);
     addProject(newProject);
     resetProjectTitle();
     resetProjectBody();

@@ -6,7 +6,6 @@ import { Alert, AlertTitle } from "@material-ui/lab";
 import { TextField, Button } from "@material-ui/core/";
 import { connect } from "react-redux";
 import { login } from "../../flux/actions/authActions";
-import { clearErrors } from "../../flux/actions/errorActions";
 
 const styles = {
   root: {
@@ -16,39 +15,32 @@ const styles = {
   },
 };
 
-const Login = ({ isAuthenticated, error, classes, login, errStatus }) => {
+const Login = ({ classes, login }) => {
   let history = useHistory();
-  useEffect(() => {
-    // Check for register error
-    console.log("ERROR", error.id);
-    if (error.id === "LOGIN_FAIL") {
-      setMsg(error.msg.msg);
-    } else {
-      setMsg(null);
-    }
-  }, [errStatus, error, isAuthenticated]);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [msg, setMsg] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const loginUser = {
       email,
       password,
     };
-    login(loginUser);
-    history.push("/");
-
-    clearErrors();
+    try {
+      await login(loginUser);
+      history.push("/");
+    } catch (error) {
+      setMsg(error.message);
+    }
   };
 
   return (
     <Fragment>
       {msg ? (
-        <Alert severity="error">
+        <Alert severity="error" onClose={() => setMsg(null)}>
           <AlertTitle>Error</AlertTitle>
           {msg}
         </Alert>
@@ -109,10 +101,9 @@ const Login = ({ isAuthenticated, error, classes, login, errStatus }) => {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  error: state.error,
   errStatus: state.error.status,
 });
 
 export const ConnectedLogin = withStyles(styles)(
-  connect(mapStateToProps, { login, clearErrors })(Login)
+  connect(mapStateToProps, { login })(Login)
 );

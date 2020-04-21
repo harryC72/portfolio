@@ -10,7 +10,7 @@ import {
 } from "../types/blogPostTypes";
 import axios from "axios";
 import { tokenConfig } from "./authActions";
-import { returnErrors } from "./errorActions";
+
 
 export const loadBlogPost = () => {
   return {
@@ -34,9 +34,9 @@ export const getBlogPost = (id) => (dispatch) => {
         payload: res.data,
       });
     })
-    .catch((err) =>
-      dispatch(returnErrors(err.response.data, err.response.status))
-    );
+    .catch((err) => {
+      throw Error(err);
+    });
 };
 
 export const getBlogPosts = () => (dispatch) => {
@@ -49,9 +49,9 @@ export const getBlogPosts = () => (dispatch) => {
         payload: res.data,
       });
     })
-    .catch((err) =>
-      dispatch(returnErrors(err.response.data, err.response.status))
-    );
+    .catch((err) => {
+      throw Error(err);
+    });
 };
 
 export const addBlogPost = (blogPost) => (dispatch, getState) => {
@@ -64,9 +64,9 @@ export const addBlogPost = (blogPost) => (dispatch, getState) => {
         payload: res.data,
       });
     })
-    .catch((err) =>
-      dispatch(returnErrors(err.response.data, err.response.status))
-    );
+    .catch((err) => {
+      throw Error(err);
+    });
 };
 
 export const deleteBlogPost = (id) => (dispatch, getState) => {
@@ -78,9 +78,9 @@ export const deleteBlogPost = (id) => (dispatch, getState) => {
         payload: id,
       });
     })
-    .catch((err) =>
-      dispatch(returnErrors(err.response.data, err.response.status))
-    );
+    .catch((err) => {
+      throw Error(err);
+    });
 };
 
 export const updateBlogPost = (id, body) => (dispatch, getState) => {
@@ -93,9 +93,9 @@ export const updateBlogPost = (id, body) => (dispatch, getState) => {
         payload: body,
       });
     })
-    .catch((err) =>
-      dispatch(returnErrors(err.response.data, err.response.status))
-    );
+    .catch((err) => {
+      throw Error(err);
+    });
 };
 
 export const shuffleBlogPosts = (prop, value) => {

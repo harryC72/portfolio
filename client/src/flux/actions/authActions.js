@@ -1,14 +1,10 @@
 import axios from "axios";
-import { returnErrors } from "./errorActions";
 import {
   USER_LOADED,
   USER_LOADING,
-  AUTH_ERROR,
   LOGIN_SUCCESS,
-  LOGIN_FAIL,
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
-  REGISTER_FAIL,
 } from "../types/authTypes";
 
 // check token & load user
@@ -25,10 +21,7 @@ export const loadUser = () => (dispatch, getState) => {
       })
     )
     .catch((err) => {
-      dispatch(returnErrors(err.response.data, err.response.status));
-      dispatch({
-        type: AUTH_ERROR,
-      });
+      console.log(err);
     });
 };
 
@@ -70,12 +63,7 @@ export const register = ({ name, email, password }) => (dispatch) => {
       })
     )
     .catch((err) => {
-      dispatch(
-        returnErrors(err.response.data, err.response.status, "REGISTER_FAIL")
-      );
-      dispatch({
-        type: REGISTER_FAIL,
-      });
+      throw Error(err);
     });
 };
 
@@ -88,7 +76,7 @@ export const login = ({ email, password }) => (dispatch) => {
 
   const body = JSON.stringify({ email, password });
 
-  axios
+  return axios
     .post("/auth/login", body, config)
     .then((res) =>
       dispatch({
@@ -97,12 +85,7 @@ export const login = ({ email, password }) => (dispatch) => {
       })
     )
     .catch((err) => {
-      dispatch(
-        returnErrors(err.response.data, err.response.status, "LOGIN_FAIL")
-      );
-      dispatch({
-        type: LOGIN_FAIL,
-      });
+      throw Error(err);
     });
 };
 

@@ -24,7 +24,7 @@ const AuthBar = ({ classes, auth }) => {
   const { isAuthenticated } = auth;
 
   return isAuthenticated ? (
-    <AppBar position="fixed" color="primary" className={classes.appBar}>
+    <AppBar position="sticky" color="primary" className={classes.appBar}>
       <ConnectedLogout>
         <Typography variant="h6" style={{ color: "red" }}>
           Logout

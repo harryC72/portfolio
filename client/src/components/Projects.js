@@ -6,7 +6,9 @@ import { getProjects, deleteProject } from "../flux/actions/projectActions";
 import { connect } from "react-redux";
 
 function Projects(props) {
-  const { getProjects, project, deleteProject, isAuthenticated } = props;
+  const { getProjects, project, deleteProject, auth } = props;
+  const { isAuthenticated } = auth;
+
   useEffect(() => {
     getProjects();
   }, [getProjects]);

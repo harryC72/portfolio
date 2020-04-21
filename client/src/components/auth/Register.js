@@ -2,9 +2,9 @@ import React, { useRef, useEffect, useState, Fragment } from "react";
 import { useInput } from "../../hooks/inputHook";
 import { withStyles } from "@material-ui/core/styles";
 import { TextField, Button } from "@material-ui/core/";
+import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 import { register } from "../../flux/actions/authActions";
-import { clearErrors } from "../../flux/actions/errorActions";
 import { Alert, AlertTitle } from "@material-ui/lab";
 
 const styles = {
@@ -15,23 +15,8 @@ const styles = {
   },
 };
 
-function Register({ classes, register, error, isAuthenticated, clearErrors }) {
-  useEffect(() => {
-    // Check for register error
-    console.log("ERROR", error.id);
-    if (error.id === "REGISTER_FAIL") {
-      setMsg(error.msg.msg);
-    } else {
-      setMsg(null);
-    }
-  }, [error, isAuthenticated]);
-
-  useEffect(() => {
-    return () => {
-      clearErrors();
-    };
-  }, []);
-
+function Register({ classes, register }) {
+  let history = useHistory();
   const { value: name, bind: bindName, reset: resetName } = useInput("");
   const { value: email, bind: bindEmail, reset: resetEmail } = useInput("");
   const {
@@ -49,11 +34,16 @@ function Register({ classes, register, error, isAuthenticated, clearErrors }) {
       password,
     };
     console.log("NEW USER IN REGISTER", newUser);
-    register(newUser);
-    clearErrors();
-    resetName();
-    resetEmail();
-    resetPassword();
+    register(newUser)
+      .then(() => {
+        resetName();
+        resetEmail();
+        resetPassword();
+        history.push("/login");
+      })
+      .catch((err) => {
+        setMsg(err);
+      });
   };
 
   return (
@@ -108,9 +98,8 @@ function Register({ classes, register, error, isAuthenticated, clearErrors }) {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  error: state.error,
 });
 
 export default withStyles(styles)(
-  connect(mapStateToProps, { register, clearErrors })(Register)
+  connect(mapStateToProps, { register })(Register)
 );

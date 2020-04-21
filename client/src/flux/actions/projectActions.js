@@ -8,6 +8,7 @@ import {
   SET_PROJECT_NOT_LOADING,
 } from "../types/projectTypes";
 import axios from "axios";
+import { tokenConfig } from "./authActions";
 
 export const loadProject = () => {
   return {
@@ -41,9 +42,9 @@ export const getProjects = () => (dispatch) => {
   });
 };
 
-export const addProject = (project) => (dispatch) => {
+export const addProject = (project) => (dispatch, getState) => {
   dispatch(loadProject());
-  axios.post("/projects", project).then((res) => {
+  axios.post("/projects", project, tokenConfig(getState)).then((res) => {
     dispatch({
       type: ADD_PROJECT,
       payload: res.data,
@@ -51,9 +52,9 @@ export const addProject = (project) => (dispatch) => {
   });
 };
 
-export const deleteProject = (id) => (dispatch) => {
+export const deleteProject = (id) => (dispatch, getState) => {
   dispatch(loadProject());
-  axios.delete(`/projects/${id}`).then((res) => {
+  axios.delete(`/projects/${id}`, tokenConfig(getState)).then((res) => {
     dispatch({
       type: DELETE_PROJECT,
       payload: id,

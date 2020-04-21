@@ -7,7 +7,8 @@ import { loadUser } from "./flux/actions/authActions";
 import { connect } from "react-redux";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
-// import { faGithubSquare, faLinkedin } from "@fortawesome/free-brands-svg-icons";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 library.add(fab);
 
@@ -21,6 +22,7 @@ function App({ loadUser }) {
         <Navbar />
         <AuthBar />
       </StylesProvider>
+      <ToastContainer autoClose={3000} hideProgressBar />
     </div>
   );
 }
