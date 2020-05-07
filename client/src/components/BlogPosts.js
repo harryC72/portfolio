@@ -11,7 +11,7 @@ function BlogPosts({ getBlogPosts, blogPost, deleteBlogPost, auth }) {
   }, [getBlogPosts]);
 
   let { blogPosts } = blogPost;
-  const { role } = auth.user;
+  const { role } = auth.user || "Not logged in";
 
   return (
     <Fragment>

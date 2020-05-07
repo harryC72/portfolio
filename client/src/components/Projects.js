@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 
 function Projects(props) {
   const { getProjects, project, deleteProject, auth } = props;
-  const { role } = auth.user;
+  const { role } = auth.user || "Not logged in";
 
   useEffect(() => {
     getProjects();
