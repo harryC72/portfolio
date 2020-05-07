@@ -7,7 +7,6 @@ import {
   PROJECT_LOADING,
   SET_PROJECT_NOT_LOADING,
 } from "../types/projectTypes";
-import { cutArray } from "../../utils/helperMethods";
 
 const initialState = {
   projects: [],

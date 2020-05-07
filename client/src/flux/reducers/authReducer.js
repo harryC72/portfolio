@@ -1,9 +1,8 @@
 import {
   USER_LOADED,
   USER_LOADING,
-  AUTH_ERROR,
   LOGIN_SUCCESS,
-  LOGIN_FAIL,
+  LOADING_FAILURE,
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
@@ -42,8 +41,7 @@ export default function (state = initialState, action) {
         isLoading: false,
       };
 
-    case AUTH_ERROR:
-    case LOGIN_FAIL:
+    case LOADING_FAILURE:
     case LOGOUT_SUCCESS:
     case REGISTER_FAIL:
       localStorage.removeItem("token");

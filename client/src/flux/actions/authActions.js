@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   USER_LOADED,
   USER_LOADING,
+  LOADING_FAILURE,
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
@@ -22,6 +23,9 @@ export const loadUser = () => (dispatch, getState) => {
     )
     .catch((err) => {
       console.log(err);
+      dispatch({
+        type: LOADING_FAILURE,
+      });
     });
 };
 

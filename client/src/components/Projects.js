@@ -17,7 +17,6 @@ function Projects(props) {
 
   return (
     <Fragment>
-      <ProjectInput />
       {projects.map(
         ({ title, _id, bodyText, url, projectImage, icon1, icon2, icon3 }) => {
           return (

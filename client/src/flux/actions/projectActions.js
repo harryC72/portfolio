@@ -44,12 +44,17 @@ export const getProjects = () => (dispatch) => {
 
 export const addProject = (project) => (dispatch, getState) => {
   dispatch(loadProject());
-  axios.post("/projects", project, tokenConfig(getState)).then((res) => {
-    dispatch({
-      type: ADD_PROJECT,
-      payload: res.data,
+  return axios
+    .post("/projects", project, tokenConfig(getState))
+    .then((res) => {
+      dispatch({
+        type: ADD_PROJECT,
+        payload: res.data,
+      });
+    })
+    .catch((err) => {
+      throw Error(err);
     });
-  });
 };
 
 export const deleteProject = (id) => (dispatch, getState) => {

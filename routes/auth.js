@@ -58,6 +58,8 @@ router.post("/login", async (req, res) => {
 
     let passwordCorrect = hashedPassword === user.passwordHash;
 
+    console.log("PASSWORD CORRECT", passwordCorrect);
+
     if (!passwordCorrect) throw Error("Password incorrect!");
 
     const token = jwt.sign({ id: user._id }, secret, { expiresIn: 3600 });

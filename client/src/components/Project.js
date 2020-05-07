@@ -41,11 +41,12 @@ export default function MediaCard({
   return (
     <Card className={classes.root}>
       <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          title={projectTitle}
-        >
-          <img src={`/images/${projectImage}`} style={{width: "200px", height: "auto"}} alt="MokaMokka" />
+        <CardMedia className={classes.media} title={projectTitle}>
+          <img
+            src={`/images/${projectImage}`}
+            style={{ width: "200px", height: "auto" }}
+            alt="MokaMokka"
+          />
         </CardMedia>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">

@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
-import { ConnectedLogout } from "../components/auth/Logout";
+import Logout from "../components/auth/Logout";
 import { connect } from "react-redux";
 
 import {
@@ -25,11 +25,11 @@ const AuthBar = ({ classes, auth }) => {
 
   return isAuthenticated ? (
     <AppBar position="sticky" color="primary" className={classes.appBar}>
-      <ConnectedLogout>
+      <Logout>
         <Typography variant="h6" style={{ color: "red" }}>
           Logout
         </Typography>
-      </ConnectedLogout>
+      </Logout>
     </AppBar>
   ) : null;
 };

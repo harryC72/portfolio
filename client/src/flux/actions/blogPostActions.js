@@ -11,7 +11,6 @@ import {
 import axios from "axios";
 import { tokenConfig } from "./authActions";
 
-
 export const loadBlogPost = () => {
   return {
     type: BLOGPOST_LOADING,
@@ -56,7 +55,7 @@ export const getBlogPosts = () => (dispatch) => {
 
 export const addBlogPost = (blogPost) => (dispatch, getState) => {
   dispatch(loadBlogPost());
-  axios
+  return axios
     .post("/blogposts", blogPost, tokenConfig(getState))
     .then((res) => {
       dispatch({

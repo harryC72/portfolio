@@ -7,7 +7,7 @@ export default (req, res, next) => {
 
   // Check for token
   if (!token)
-    return res.status(401).json({ msg: "No token, authorization denied" });
+    return res.status(401).send({ msg: "No token, authorization denied" });
 
   try {
     // Verify token
@@ -16,6 +16,6 @@ export default (req, res, next) => {
     req.user = decoded;
     next();
   } catch (e) {
-    res.status(400).json({ msg: "Token is not valid" });
+    res.status(400).send("Token is not valid");
   }
 };

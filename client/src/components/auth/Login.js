@@ -1,5 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
-import { useInput } from "../../hooks/inputHook";
+import React, { Fragment, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { withStyles } from "@material-ui/core/styles";
 import { Alert, AlertTitle } from "@material-ui/lab";
@@ -101,7 +100,6 @@ const Login = ({ classes, login }) => {
 
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  errStatus: state.error.status,
 });
 
 export const ConnectedLogin = withStyles(styles)(

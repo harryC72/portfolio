@@ -8,7 +8,6 @@ function Blog() {
   return (
     <Box display="flex">
       <Box width={2 / 3} style={{ border: "2px solid black" }}>
-        <BlogInput />
         <BlogPosts />
       </Box>
       <Box width={1 / 3} style={{ border: "2px solid black" }}>
