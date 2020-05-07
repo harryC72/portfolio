@@ -11,7 +11,7 @@ function BlogPosts({ getBlogPosts, blogPost, deleteBlogPost, auth }) {
   }, [getBlogPosts]);
 
   let { blogPosts } = blogPost;
-  const { isAuthenticated } = auth;
+  const { role } = auth.user;
 
   return (
     <Fragment>
@@ -24,7 +24,7 @@ function BlogPosts({ getBlogPosts, blogPost, deleteBlogPost, auth }) {
               bodyText={bodyText}
               deleteId={_id}
               deletePost={deleteBlogPost}
-              isAuth={isAuthenticated}
+              role={role}
             />
           </Box>
         );

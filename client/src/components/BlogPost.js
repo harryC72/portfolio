@@ -8,6 +8,7 @@ import {
   CardContent,
   Button,
 } from "@material-ui/core/";
+import { ROLE } from "../generalConstants";
 
 import Typography from "@material-ui/core/Typography";
 
@@ -28,8 +29,7 @@ function MediaCard({
   bodyText,
   deletePost,
   deleteId,
-  shuffling,
-  isAuth,
+  role,
 }) {
   const deleting = (id) => {
     deletePost(id);
@@ -60,7 +60,7 @@ function MediaCard({
           </Typography>
         </CardContent>
       </CardActionArea>
-      {isAuth ? authButtons : null}
+      {role === ROLE ? authButtons : null}
     </Card>
   );
 }

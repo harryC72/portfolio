@@ -10,6 +10,7 @@ import {
   Link,
   Typography,
 } from "@material-ui/core/";
+import { ROLE } from "../generalConstants";
 
 const useStyles = makeStyles({
   root: {
@@ -30,7 +31,7 @@ export default function MediaCard({
   icon3,
   deleteProject,
   deleteId,
-  isAuth,
+  role,
 }) {
   const classes = useStyles();
 
@@ -68,7 +69,7 @@ export default function MediaCard({
           Learn More
         </Button>
       </CardActions>
-      {isAuth ? (
+      {role === ROLE ? (
         <Button onClick={() => deleting(deleteId)}>Delete</Button>
       ) : null}
     </Card>

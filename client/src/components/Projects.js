@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 
 function Projects(props) {
   const { getProjects, project, deleteProject, auth } = props;
-  const { isAuthenticated } = auth;
+  const { role } = auth.user;
 
   useEffect(() => {
     getProjects();
@@ -31,7 +31,7 @@ function Projects(props) {
               icon3={icon3}
               deleteProject={deleteProject}
               deleteId={_id}
-              isAuth={isAuthenticated}
+              role={role}
             />
           );
         }
