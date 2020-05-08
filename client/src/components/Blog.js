@@ -7,10 +7,20 @@ import BlogList from "./BlogList";
 function Blog() {
   return (
     <Box display="flex">
-      <Box width={2 / 3} style={{ border: "2px solid black" }}>
+      <Box
+        width={2 / 3}
+        style={{ background: "grey", border: "2px solid white" }}
+      >
         <BlogPosts />
       </Box>
-      <Box width={1 / 3} style={{ border: "2px solid black" }}>
+      <Box
+        width={1 / 3}
+        style={{
+          background: "grey",
+          border: "2px solid white",
+          color: "white",
+        }}
+      >
         <BlogList />
       </Box>
     </Box>

@@ -122,15 +122,6 @@ function Navbar({ theme }) {
                   Projects
                 </Typography>
               </NavLink>
-              {/* <NavLink to="/register" className={classes.nav}>
-                <Typography
-                  variant="h6"
-                  className={path === "/" ? classes.homeTitel : classes.title}
-                  style={path === "/" ? { color: "grey" } : null}
-                >
-                  Register
-                </Typography>
-              </NavLink> */}
             </Box>
           </Toolbar>
         </AppBar>
