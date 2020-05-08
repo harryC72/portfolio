@@ -4,6 +4,14 @@ import ProjectInput from "./ProjectInput";
 import Project from "./Project";
 import { getProjects, deleteProject } from "../flux/actions/projectActions";
 import { connect } from "react-redux";
+import { styled } from "@material-ui/core/styles";
+
+const ProjectBox = styled(Box)({
+  display: "flex",
+  justifyContent: "flex-start",
+  margin: "20px",
+  flexWrap: "wrap",
+});
 
 function Projects(props) {
   const { getProjects, project, deleteProject, auth } = props;
@@ -16,7 +24,7 @@ function Projects(props) {
   let { projects } = project;
 
   return (
-    <Fragment>
+    <ProjectBox>
       {projects.map(
         ({ title, _id, bodyText, url, projectImage, icon1, icon2, icon3 }) => {
           return (
@@ -36,7 +44,7 @@ function Projects(props) {
           );
         }
       )}
-    </Fragment>
+    </ProjectBox>
   );
 }
 

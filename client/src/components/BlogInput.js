@@ -1,5 +1,4 @@
 import React, { useState, Fragment } from "react";
-import { useInput } from "../hooks/inputHook";
 import { withStyles } from "@material-ui/core/styles";
 import { TextField, Button } from "@material-ui/core/";
 import { Alert, AlertTitle } from "@material-ui/lab";
@@ -18,22 +17,14 @@ export function BlogInput({ classes, addBlogPost, loading }) {
   const [msg, setMsg] = useState(null);
   const [errors, setErrors] = useState({});
 
-  const {
-    value: postTitle,
-    bind: bindPostTitle,
-    reset: resetPostTitle,
-  } = useInput("");
-  const {
-    value: postBody,
-    bind: bindPostBody,
-    reset: resetPostBody,
-  } = useInput("");
+  const [postTitle, setPostTitle] = useState("");
+  const [postBody, setPostBody] = useState("");
 
   const formIsValid = () => {
     const errors = {};
 
-    if (!postTitle) errors.postTitle = "Title is required";
-    if (!postBody) errors.postBody = "Body text is required";
+    if (!postTitle) errors.title = "Title is required";
+    if (!postBody) errors.body = "Body text is required";
 
     setErrors(errors);
 
@@ -49,8 +40,8 @@ export function BlogInput({ classes, addBlogPost, loading }) {
     if (!formIsValid()) return;
     addBlogPost(newPost)
       .then(() => {
-        resetPostTitle();
-        resetPostBody();
+        setPostTitle("");
+        setPostBody("");
       })
       .catch((err) => {
         console.log("ERROR BLOGINPUT", Object.getOwnPropertyNames(err));
@@ -87,7 +78,7 @@ export function BlogInput({ classes, addBlogPost, loading }) {
             name="PostTitle"
             error={errors.postTitle ? true : false}
             helperText={errors.postTitle === "" ? " " : errors.postTitle}
-            {...bindPostTitle}
+            onChange={(e) => setPostTitle(e.target.value)}
           />
         </div>
         <div>
@@ -100,7 +91,7 @@ export function BlogInput({ classes, addBlogPost, loading }) {
             name="PostBody"
             error={errors.postBody ? true : false}
             helperText={errors.postBody === "" ? " " : errors.postBody}
-            {...bindPostBody}
+            onChange={(e) => setPostBody(e.target.value)}
           />
         </div>
         {saveButton()}

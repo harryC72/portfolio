@@ -34,6 +34,7 @@ class BlogList extends Component {
               key={_id}
               onClick={() => shuffleBlogPosts("date", date)}
               style={{ cursor: "pointer" }}
+              component={"div"}
             >
               <h4 style={{ marginBottom: 0 }}>{title}</h4>
               <p style={{ margin: 0 }}>{formatDate(date)}</p>

@@ -8,33 +8,32 @@ import blue from "@material-ui/core/colors/blue";
 export const theme1 = createMuiTheme({
   palette: {
     primary: purple,
-    secondary: green
+    secondary: green,
   },
   status: {
-    danger: "orange"
-  }
+    danger: "orange",
+  },
 });
 
 export const theme2 = createMuiTheme({
   palette: {
     primary: red,
-    secondary: pink
+    secondary: pink,
   },
   status: {
-    danger: "orange"
-  }
+    danger: "orange",
+  },
 });
 
 export const theme3 = createMuiTheme({
   palette: {
     primary: blue,
-    secondary: blue
   },
   status: {
-    danger: "orange"
-  }
+    danger: "orange",
+  },
 });
 
 export const theme = createMuiTheme({
-  spacing: 8
+  spacing: 8,
 });

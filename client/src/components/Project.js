@@ -14,7 +14,8 @@ import { ROLE } from "../generalConstants";
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 345,
+    width: 345,
+    margin: "20px",
   },
   media: {
     height: 140,

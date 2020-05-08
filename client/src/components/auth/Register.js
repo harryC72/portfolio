@@ -1,5 +1,4 @@
 import React, { useState, Fragment } from "react";
-import { useInput } from "../../hooks/inputHook";
 import { withStyles } from "@material-ui/core/styles";
 import { TextField, Button } from "@material-ui/core/";
 import { useHistory } from "react-router-dom";
@@ -17,13 +16,9 @@ const styles = {
 
 function Register({ classes, register }) {
   let history = useHistory();
-  const { value: name, bind: bindName, reset: resetName } = useInput("");
-  const { value: email, bind: bindEmail, reset: resetEmail } = useInput("");
-  const {
-    value: password,
-    bind: bindPassword,
-    reset: resetPassword,
-  } = useInput("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [msg, setMsg] = useState();
 
   const handleSubmit = (e) => {
@@ -36,9 +31,9 @@ function Register({ classes, register }) {
     console.log("NEW USER IN REGISTER", newUser);
     register(newUser)
       .then(() => {
-        resetName();
-        resetEmail();
-        resetPassword();
+        setName("");
+        setEmail("");
+        setPassword("");
         history.push("/login");
       })
       .catch((err) => {
@@ -67,7 +62,7 @@ function Register({ classes, register }) {
             label="Name"
             variant="outlined"
             name="Name"
-            {...bindName}
+            onChange={(e) => setName(e.target.value)}
           />
         </div>
         <div>
@@ -77,7 +72,7 @@ function Register({ classes, register }) {
             label="Email"
             variant="outlined"
             name="Email"
-            {...bindEmail}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div>
@@ -87,7 +82,7 @@ function Register({ classes, register }) {
             label="Password"
             variant="outlined"
             name="Password"
-            {...bindPassword}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <Button type="submit">Register</Button>

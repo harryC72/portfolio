@@ -6,7 +6,7 @@ import Spinner from "./Spinner";
 const ProtectedRoute = ({ component: Component, ...rest }) => {
   const { isAuthenticated, isLoading } = rest;
 
-  if (isAuthenticated == undefined || isLoading) {
+  if (isAuthenticated === undefined || isLoading) {
     return <Spinner />;
   } else {
     return (

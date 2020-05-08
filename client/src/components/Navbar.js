@@ -69,7 +69,7 @@ function Navbar({ theme }) {
   return (
     <div
       className={classes.root}
-      style={path === "/" ? { marginTop: "20px" } : null}
+      // style={path === "/" ? { marginTop: "20px" } : null}
     >
       <ThemeProvider theme={getTheme()}>
         <AppBar

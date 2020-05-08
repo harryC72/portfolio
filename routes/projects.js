@@ -32,7 +32,7 @@ router.get("/:id", (req, res) => {
 
 router.post("/", auth, (req, res) => {
   // Validate request
-  if (!req.body.bodyText) {
+  if (!req.body.body) {
     return res.status(400).send({
       message: "Project text can not be empty",
     });
@@ -40,7 +40,7 @@ router.post("/", auth, (req, res) => {
 
   const post = new project({
     title: req.body.title || "Untitled Note",
-    bodyText: req.body.bodyText,
+    bodyText: req.body.body,
     url: req.body.url,
     projectImage: req.body.projectImage,
     icon1: req.body.icon1,

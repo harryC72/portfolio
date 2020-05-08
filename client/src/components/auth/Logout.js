@@ -6,7 +6,7 @@ import { logout } from "../../flux/actions/authActions";
 const Logout = (props) => {
   return (
     <Fragment>
-      <Link onClick={props.logout} href="#">
+      <Link onClick={props.logout} href="#" style={{ textDecoration: "none" }}>
         {props.children}
       </Link>
     </Fragment>

@@ -1,5 +1,4 @@
 import React, { useState, Fragment } from "react";
-import { useInput } from "../hooks/inputHook";
 import { withStyles } from "@material-ui/core/styles";
 import { TextField, Button } from "@material-ui/core/";
 import { Alert, AlertTitle } from "@material-ui/lab";
@@ -21,43 +20,21 @@ function ProjectInput({ classes, addProject }) {
   const [msg, setMsg] = useState(null);
   const [errors, setErrors] = useState({});
 
-  const {
-    value: projectTitle,
-    bind: bindProjectTitle,
-    reset: resetProjectTitle,
-  } = useInput("");
-  const {
-    value: projectBody,
-    bind: bindProjectBody,
-    reset: resetProjectBody,
-  } = useInput("");
-
-  const {
-    value: projectUrl,
-    bind: bindProjectUrl,
-    reset: resetProjectUrl,
-  } = useInput("");
-
-  const {
-    value: projectImage,
-    bind: bindProjectImage,
-    reset: resetProjectImage,
-  } = useInput("");
-
-  const { value: icon1, bind: bindIcon1, reset: resetIcon1 } = useInput("");
-
-  const { value: icon2, bind: bindIcon2, reset: resetIcon2 } = useInput("");
-
-  const { value: icon3, bind: bindIcon3, reset: resetIcon3 } = useInput("");
-
-  const { value: icon4, bind: bindIcon4, reset: resetIcon4 } = useInput("");
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+  const [url, setUrl] = useState("");
+  const [projectImage, setProjectImage] = useState("");
+  const [icon1, setIcon1] = useState("");
+  const [icon2, setIcon2] = useState("");
+  const [icon3, setIcon3] = useState("");
+  const [icon4, setIcon4] = useState("");
 
   const formIsValid = () => {
     const errors = {};
 
-    if (!projectTitle) errors.projectTitle = "Title is required";
-    if (!projectBody) errors.projectBody = "Body text is required";
-    if (!projectUrl) errors.projectUrl = "Url is required";
+    if (!title) errors.projectTitle = "Title is required";
+    if (!body) errors.projectBody = "Body text is required";
+    if (!url) errors.projectUrl = "Url is required";
     if (!projectImage) errors.projectImage = "Image is required";
 
     setErrors(errors);
@@ -69,27 +46,32 @@ function ProjectInput({ classes, addProject }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const newProject = {
-      projectTitle,
-      projectBody,
-      projectUrl,
+      title,
+      body,
+      url,
       projectImage,
       icon1,
       icon2,
       icon3,
       icon4,
     };
+    console.log("NewProject", newProject);
     if (!formIsValid()) return;
-    addProject(newProject).catch((err) => {
-      setMsg(err.message);
-    });
-    resetProjectTitle();
-    resetProjectBody();
-    resetProjectUrl();
-    resetProjectImage();
-    resetIcon1();
-    resetIcon2();
-    resetIcon3();
-    resetIcon4();
+    addProject(newProject)
+      .then(() => {
+        console.log("I WAS HERE");
+        setTitle("");
+        setBody("");
+        setUrl("");
+        setProjectImage("");
+        setIcon1("");
+        setIcon2("");
+        setIcon3("");
+        setIcon4("");
+      })
+      .catch((err) => {
+        setMsg(err.message);
+      });
   };
 
   return (
@@ -112,9 +94,10 @@ function ProjectInput({ classes, addProject }) {
             label="Project title"
             variant="outlined"
             name="ProjectTitle"
+            value={title}
             error={errors.projectTitle ? true : false}
             helperText={errors.projectTitle === "" ? " " : errors.projectTitle}
-            {...bindProjectTitle}
+            onChange={(e) => setTitle(e.target.value)}
           />
         </div>
         <div>
@@ -125,9 +108,10 @@ function ProjectInput({ classes, addProject }) {
             rows="4"
             variant="outlined"
             name="ProjectBody"
+            value={body}
             error={errors.projectBody ? true : false}
             helperText={errors.projectBody === "" ? " " : errors.projectBody}
-            {...bindProjectBody}
+            onChange={(e) => setBody(e.target.value)}
           />
         </div>
         <div>
@@ -136,9 +120,10 @@ function ProjectInput({ classes, addProject }) {
             label="Project url"
             variant="outlined"
             name="ProjectUrl"
+            value={url}
             error={errors.projectUrl ? true : false}
             helperText={errors.projectUrl === "" ? " " : errors.projectUrl}
-            {...bindProjectUrl}
+            onChange={(e) => setUrl(e.target.value)}
           />
         </div>
         <div>
@@ -147,9 +132,10 @@ function ProjectInput({ classes, addProject }) {
             label="Project image"
             variant="outlined"
             name="ProjectImage"
+            value={projectImage}
             error={errors.projectImage ? true : false}
             helperText={errors.projectImage === "" ? " " : errors.projectImage}
-            {...bindProjectUrl}
+            onChange={(e) => setProjectImage(e.target.value)}
           />
         </div>
 
@@ -159,10 +145,11 @@ function ProjectInput({ classes, addProject }) {
             label="Icon 1"
             variant="outlined"
             name="Icon1"
-            {...bindIcon1}
+            value={icon1}
             helperText={
               Object.keys(errors).length === 0 ? " " : "Icon is optional"
             }
+            onChange={(e) => setIcon1(e.target.value)}
           />
         </div>
         <div>
@@ -171,10 +158,11 @@ function ProjectInput({ classes, addProject }) {
             label="Icon 2"
             variant="outlined"
             name="Icon2"
+            value={icon2}
             helperText={
               Object.keys(errors).length === 0 ? " " : "Icon is optional"
             }
-            {...bindIcon2}
+            onChange={(e) => setIcon2(e.target.value)}
           />
         </div>
         <div>
@@ -183,10 +171,11 @@ function ProjectInput({ classes, addProject }) {
             label="Icon 3"
             variant="outlined"
             name="Icon3"
+            value={icon3}
             helperText={
               Object.keys(errors).length === 0 ? " " : "Icon is optional"
             }
-            {...bindIcon3}
+            onChange={(e) => setIcon3(e.target.value)}
           />
         </div>
         <div>
@@ -195,10 +184,11 @@ function ProjectInput({ classes, addProject }) {
             label="Icon 4"
             variant="outlined"
             name="Icon4"
+            value={icon4}
             helperText={
               Object.keys(errors).length === 0 ? " " : "Icon is optional"
             }
-            {...bindIcon4}
+            onChange={(e) => setIcon4(e.target.value)}
           />
         </div>
         <Button type="submit">Submit</Button>
