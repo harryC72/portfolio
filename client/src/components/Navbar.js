@@ -8,6 +8,7 @@ import {
   Typography,
   Hidden,
   Box,
+  Link,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import ReactRouter from "./ReactRouter";
@@ -37,12 +38,9 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     color: "white",
   },
-  nav: {
-    textDecoration: "none",
-  },
 }));
 
-function Navbar({ theme }) {
+function Navbar({ theme, auth }) {
   const classes = useStyles();
 
   let path = window.location.pathname;
@@ -92,36 +90,38 @@ function Navbar({ theme }) {
               display="flex"
               justifyContent="space-between"
               flexDirection="row"
-              width={path === "/" ? 450 : 300}
+              width={path === "/" && auth ? 450 : 300}
             >
-              <NavLink to="/" className={classes.nav}>
-                <Typography
-                  variant="h6"
+              <Link
+                exact
+                to="/"
+                className={path === "/" ? classes.homeTitel : classes.title}
+                activeClassName="special"
+                component={NavLink}
+                variant="h6"
+              >
+                Home
+              </Link>
+              {auth ? (
+                <Link
+                  to="/blog"
                   className={path === "/" ? classes.homeTitel : classes.title}
-                  style={path === "/" ? { color: "grey" } : null}
-                >
-                  Home
-                </Typography>
-              </NavLink>
-
-              <NavLink to="/blog" className={classes.nav}>
-                <Typography
+                  activeClassName="special"
+                  component={NavLink}
                   variant="h6"
-                  className={path === "/" ? classes.homeTitel : classes.title}
-                  style={path === "/" ? { color: "grey" } : null}
                 >
                   {blog}
-                </Typography>
-              </NavLink>
-              <NavLink to="/projects" className={classes.nav}>
-                <Typography
-                  variant="h6"
-                  className={path === "/" ? classes.homeTitel : classes.title}
-                  style={path === "/" ? { color: "grey" } : null}
-                >
-                  Projects
-                </Typography>
-              </NavLink>
+                </Link>
+              ) : null}
+              <Link
+                to="/projects"
+                className={path === "/" ? classes.homeTitel : classes.title}
+                activeClassName="special"
+                component={NavLink}
+                variant="h6"
+              >
+                Projects
+              </Link>
             </Box>
           </Toolbar>
         </AppBar>

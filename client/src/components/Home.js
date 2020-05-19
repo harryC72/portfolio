@@ -36,7 +36,11 @@ function Home({ classes }) {
             Fullstack Developer
           </Typography>
           <Typography className={classes.firstInfo} variant="h5" gutterBottom>
-            <Link href="haraldcarlsten@yahoo.se" onClick={preventDefault}>
+            <Link
+              href="haraldcarlsten@yahoo.se"
+              onClick={preventDefault}
+              color="secondary"
+            >
               haraldcarlsten@yahoo.se
             </Link>
           </Typography>

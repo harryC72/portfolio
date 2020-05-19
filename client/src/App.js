@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import AuthBar from "./components/AuthBar";
@@ -13,14 +13,22 @@ import "react-toastify/dist/ReactToastify.css";
 
 library.add(fab);
 
-function App({ loadUser }) {
-  useEffect(() => {
-    loadUser();
-  }, [loadUser]);
+function App({ loadUser, isAuthenticated }) {
+  console.log("ON MOUNTING", isAuthenticated);
+  useEffect(
+    () => {
+      loadUser();
+    },
+    [loadUser],
+    isAuthenticated
+  );
+
+  console.log("AUTH", isAuthenticated);
+
   return (
     <div className="App">
       <StylesProvider injectFirst>
-        <Navbar />
+        <Navbar auth={isAuthenticated} />
         <Footer>
           <AuthBar />
         </Footer>
@@ -31,7 +39,7 @@ function App({ loadUser }) {
 }
 
 const mapStateToProps = (state) => ({
-  auth: state.blogPost,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { loadUser })(App);

@@ -1,9 +1,8 @@
 import { createMuiTheme } from "@material-ui/core/styles";
-import purple from "@material-ui/core/colors/purple";
-import green from "@material-ui/core/colors/green";
-import red from "@material-ui/core/colors/red";
-import pink from "@material-ui/core/colors/pink";
-import blue from "@material-ui/core/colors/blue";
+import { purple, green, red, pink, blue, grey } from "@material-ui/core/colors";
+
+const lightGrey = grey[400];
+const mediumBlue = blue[600];
 
 export const theme1 = createMuiTheme({
   palette: {
@@ -27,7 +26,8 @@ export const theme2 = createMuiTheme({
 
 export const theme3 = createMuiTheme({
   palette: {
-    primary: blue,
+    primary: { main: lightGrey },
+    secondary: { main: mediumBlue },
   },
   status: {
     danger: "orange",

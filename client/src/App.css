@@ -40,3 +40,7 @@
 h6.MuiTypography-h6 {
   text-align: left;
 }
+
+.special {
+  color: #757575 !important;
+}
