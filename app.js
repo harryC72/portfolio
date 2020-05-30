@@ -6,6 +6,7 @@ import cors from "cors";
 
 import blogPostRoutes from "./routes/blogPosts";
 import projectRoutes from "./routes/projects";
+import technologyRoutes from "./routes/technologies";
 import userRoutes from "./routes/users";
 import authRoutes from "./routes/auth";
 
@@ -33,6 +34,7 @@ mongoose
 
 app.use("/blogposts", blogPostRoutes);
 app.use("/projects", projectRoutes);
+app.use("/technologies", technologyRoutes);
 app.use("/users", userRoutes);
 app.use("/auth", authRoutes);
 

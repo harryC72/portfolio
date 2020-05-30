@@ -1,25 +1,26 @@
 import { Router } from "express";
-import blogPost from "../models/BlogPost";
+import technology from "../models/Technology";
 
 import auth from "../middleware/auth.js";
 
 const router = Router();
 
 router.get("/", (req, res) => {
-  blogPost
+  technology
     .find()
     .then((data) => {
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error occurred while getting blog posts",
+        message:
+          err.message || "Some error occurred while getting technologies",
       });
     });
 });
 
 router.get("/:id", (req, res) => {
-  blogPost
+  technology
     .find({ _id: req.params.id })
     .then((data) => {
       res.send(data);
@@ -27,25 +28,28 @@ router.get("/:id", (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while getting the blog post",
+          err.message || "Some error occurred while getting the technology",
       });
     });
 });
 
-router.post("/", auth, (req, res) => {
+router.post("/", (req, res) => {
   // Validate request
-  if (!req.body.bodyText) {
-    return res.status(400).send({
-      message: "Blogpost body text can not be empty",
-    });
-  }
+  // if (!req.body.name || !req.body.image || !req.body.type) {
+  //   return res.status(400).send({
+  //     message: "Fill all fields",
+  //   });
+  // }
 
-  const post = new blogPost({
-    title: req.body.title || "Untitled Note",
-    bodyText: req.body.bodyText,
+  console.log("REQ BODY NAME", req.body);
+
+  const newTech = new technology({
+    name: req.body.name,
+    image: req.body.image,
+    type: req.body.type,
   });
 
-  post
+  newTech
     .save()
     .then((data) => {
       console.log("data", data);
@@ -54,23 +58,30 @@ router.post("/", auth, (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the blog post.",
+          err.message ||
+          "Some error occurred while creating the new technology.",
       });
     });
 });
 
-router.put("/:id", auth, (req, res) => {
+router.put("/:id", (req, res) => {
   // Validate request
-  if (!req.body.bodyText) {
-    return res.status(400).send({
-      message: "Blogpost body text can not be empty",
-    });
-  }
+  // if (!req.body.bodyText) {
+  //   return res.status(400).send({
+  //     message: "Blogpost body text can not be empty",
+  //   });
+  // }
 
-  blogPost
+  technology
     .updateOne(
       { _id: req.params.id }, // Filter
-      { $set: { title: req.body.title, bodyText: req.body.bodyText } }, // Update
+      {
+        $set: {
+          name: req.body.name,
+          image: req.body.image,
+          type: req.body.type,
+        },
+      }, // Update
       { upsert: true } // add document with req.body._id if not exists
     )
 
@@ -80,13 +91,13 @@ router.put("/:id", auth, (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the blog post.",
+          err.message || "Some error occurred while updating the technology.",
       });
     });
 });
 
-router.delete("/:id", auth, (req, res) => {
-  blogPost
+router.delete("/:id", (req, res) => {
+  technology
     .findByIdAndDelete({
       _id: req.params.id,
       function(err, post) {
@@ -100,7 +111,8 @@ router.delete("/:id", auth, (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while trying to delete the post",
+          err.message ||
+          "Some error occurred while trying to delete the technology",
       });
     });
 });

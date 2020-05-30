@@ -1,5 +1,8 @@
 import mongoose from "mongoose";
+import technology from "./Technology";
 var Schema = mongoose.Schema;
+
+let tech = technology.schema;
 
 let projectSchema = new Schema({
   title: String, // String is shorthand for {type: String}
@@ -8,13 +11,12 @@ let projectSchema = new Schema({
   hidden: Boolean,
   url: String,
   projectImage: String,
-  icon1: String,
-  icon2: String,
-  icon3: String,
-  icon4: String
+  icon1: [tech],
+  icon2: [tech],
+  icon3: [tech],
+  icon4: [tech],
 });
 
 const blogPost = mongoose.model("project", projectSchema);
 
 export default blogPost;
-""
