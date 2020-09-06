@@ -1,6 +1,6 @@
-import React from "react";
-import { NavLink, withRouter } from "react-router-dom";
-import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
+import React from 'react';
+import { NavLink, withRouter } from 'react-router-dom';
+import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import {
   AppBar,
   Toolbar,
@@ -9,22 +9,22 @@ import {
   Hidden,
   Box,
   Link,
-} from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
-import ReactRouter from "./ReactRouter";
-import { theme1, theme2, theme3 } from "../theme";
+} from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
+import ReactRouter from './ReactRouter';
+import { theme1, theme2, theme3 } from '../theme';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
   },
   appbarHome: {
-    background: "transparent",
-    boxShadow: "none",
+    background: 'transparent',
+    boxShadow: 'none',
   },
   centerNavs: {
-    display: "flex",
-    justifyContent: "center",
+    display: 'flex',
+    justifyContent: 'center',
   },
 
   menuButton: {
@@ -32,11 +32,11 @@ const useStyles = makeStyles((theme) => ({
   },
   titleHome: {
     flexGrow: 1,
-    background: "transparent",
+    background: 'transparent',
   },
   title: {
     flexGrow: 1,
-    color: "white",
+    color: 'white',
   },
 }));
 
@@ -44,22 +44,22 @@ function Navbar({ theme, auth }) {
   const classes = useStyles();
 
   let path = window.location.pathname;
-  let blog = "\xa0\xa0Blog";
+  let blog = '\xa0\xa0Blog';
 
   const getTheme = () => {
-    if (path === "/blog") {
+    if (path === '/blog') {
       return theme1;
     }
 
-    if (path === "/projects") {
+    if (path === '/projects') {
       return theme2;
     }
 
-    if (path === "/register" || path === "/login") {
+    if (path === '/register' || path === '/login') {
       return theme3;
     }
 
-    if (path === "/") {
+    if (path === '/') {
       return theme3;
     }
   };
@@ -72,53 +72,53 @@ function Navbar({ theme, auth }) {
       <ThemeProvider theme={getTheme()}>
         <AppBar
           elevation={0}
-          position="static"
-          className={path === "/" ? classes.appbarHome : ""}
+          position='static'
+          className={path === '/' ? classes.appbarHome : ''}
         >
           <Toolbar className={classes.centerNavs}>
             <Hidden smUp>
               <IconButton
-                edge="start"
+                edge='start'
                 className={classes.menuButton}
-                color="inherit"
-                aria-label="menu"
+                color='inherit'
+                aria-label='menu'
               >
                 <MenuIcon />
               </IconButton>
             </Hidden>
             <Box
-              display="flex"
-              justifyContent="space-between"
-              flexDirection="row"
-              width={path === "/" && auth ? 450 : 300}
+              display='flex'
+              justifyContent='space-between'
+              flexDirection='row'
+              width={path === '/' && auth ? 450 : 300}
             >
               <Link
                 exact
-                to="/"
-                className={path === "/" ? classes.homeTitel : classes.title}
-                activeClassName="special"
+                to='/'
+                className={path === '/' ? classes.homeTitel : classes.title}
+                activeClassName='special'
                 component={NavLink}
-                variant="h6"
+                variant='h6'
               >
                 Home
               </Link>
-              {auth ? (
-                <Link
-                  to="/blog"
-                  className={path === "/" ? classes.homeTitel : classes.title}
-                  activeClassName="special"
-                  component={NavLink}
-                  variant="h6"
-                >
-                  {blog}
-                </Link>
-              ) : null}
+              {/* {auth ? ( */}
               <Link
-                to="/projects"
-                className={path === "/" ? classes.homeTitel : classes.title}
-                activeClassName="special"
+                to='/blog'
+                className={path === '/' ? classes.homeTitel : classes.title}
+                activeClassName='special'
                 component={NavLink}
-                variant="h6"
+                variant='h6'
+              >
+                {blog}
+              </Link>
+              {/* ) : null} */}
+              <Link
+                to='/projects'
+                className={path === '/' ? classes.homeTitel : classes.title}
+                activeClassName='special'
+                component={NavLink}
+                variant='h6'
               >
                 Projects
               </Link>
