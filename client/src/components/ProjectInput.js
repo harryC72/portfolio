@@ -21,7 +21,7 @@ const styles = {
   },
 };
 
-function ProjectInput({ classes, getTechnologies, technology }) {
+function ProjectInput({ classes, getTechnologies, technology, addProject }) {
   const [msg, setMsg] = useState(null);
   const [errors, setErrors] = useState({});
   const [tech, setTech] = useState([]);
@@ -59,7 +59,6 @@ function ProjectInput({ classes, getTechnologies, technology }) {
     if (!project.projectImage) errors.projectImage = "Image is required";
 
     setErrors(errors);
-    console.log("ERRORS", errors);
 
     return Object.keys(errors).length === 0;
   };
@@ -86,16 +85,25 @@ function ProjectInput({ classes, getTechnologies, technology }) {
     setProject((prevItem) => ({
       ...prevItem,
       [techName]: value.name,
-      [techImage]: value.image,
-      [techType]: value.type,
     }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!formIsValid()) return;
-    console.log("PROJECT IN PROJECTINPUT", project);
-    addProject(project);
+    console.log("PROJECT IN PROJECT INPUT", project);
+    addProject(project)
+      .then(() => {
+        setProject({
+          title: "",
+          bodyText: "",
+          url: "",
+          projectImage: "",
+        });
+      })
+      .catch((err) => {
+        setMsg(err.message);
+      });
   };
 
   return (
@@ -169,7 +177,7 @@ function ProjectInput({ classes, getTechnologies, technology }) {
         <div style={{ display: "flex", justifyContent: "center" }}>
           <TechDropDown
             name="tech1"
-            label="Tech1"
+            label="Front End Language"
             onChange={handleSelectChange("tech1")}
             options={tech}
           />
@@ -177,12 +185,43 @@ function ProjectInput({ classes, getTechnologies, technology }) {
         <div style={{ display: "flex", justifyContent: "center" }}>
           <TechDropDown
             name="tech2"
-            label="Tech2"
+            label="Front End Framework"
             onChange={handleSelectChange("tech2")}
             options={tech}
           />
         </div>
-
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <TechDropDown
+            name="tech3"
+            label="Back End Language"
+            onChange={handleSelectChange("tech2")}
+            options={tech}
+          />
+        </div>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <TechDropDown
+            name="tech4"
+            label="Back End Framework"
+            onChange={handleSelectChange("tech2")}
+            options={tech}
+          />
+        </div>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <TechDropDown
+            name="tech5"
+            label="Back End Runtime"
+            onChange={handleSelectChange("tech2")}
+            options={tech}
+          />
+        </div>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <TechDropDown
+            name="tech6"
+            label="Database Technology"
+            onChange={handleSelectChange("tech2")}
+            options={tech}
+          />
+        </div>
         <div>
           <Button
             type="submit"

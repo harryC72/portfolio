@@ -42,11 +42,12 @@ export const getProjects = () => (dispatch) => {
   });
 };
 
-export const addProject = (project) => (dispatch, getState) => {
+export const addProject = (project) => (dispatch) => {
   dispatch(loadProject());
   return axios
-    .post("/projects", project, tokenConfig(getState))
+    .post("/projects", project)
     .then((res) => {
+      console.log("PROJECT IN ACTION", project);
       dispatch({
         type: ADD_PROJECT,
         payload: res.data,
@@ -56,6 +57,22 @@ export const addProject = (project) => (dispatch, getState) => {
       throw Error(err);
     });
 };
+
+// export const addProject = (project) => (dispatch, getState) => {
+//   dispatch(loadProject());
+//   return axios
+//     .post("/projects", project, tokenConfig(getState))
+//     .then((res) => {
+//       console.log("PROJECT IN ACTION", project);
+//       dispatch({
+//         type: ADD_PROJECT,
+//         payload: res.data,
+//       });
+//     })
+//     .catch((err) => {
+//       throw Error(err);
+//     });
+// };
 
 export const deleteProject = (id) => (dispatch, getState) => {
   dispatch(loadProject());

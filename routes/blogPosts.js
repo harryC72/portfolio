@@ -80,7 +80,7 @@ router.put("/:id", auth, (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the blog post.",
+          err.message || "Some error occurred while updating the blog post.",
       });
     });
 });

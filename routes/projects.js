@@ -30,23 +30,36 @@ router.get("/:id", (req, res) => {
     });
 });
 
-router.post("/", auth, (req, res) => {
+router.post("/", (req, res) => {
   // Validate request
-  if (!req.body.body) {
+  if (!req.body.bodyText) {
     return res.status(400).send({
       message: "Project text can not be empty",
     });
   }
 
+  console.log("REQ BODY FROM BACKEND", req.body);
+
   const post = new project({
     title: req.body.title || "Untitled Note",
-    bodyText: req.body.body,
+    bodyText: req.body.bodyText,
     url: req.body.url,
     projectImage: req.body.projectImage,
-    icon1: req.body.icon1,
-    icon2: req.body.icon2,
-    icon3: req.body.icon3,
-    icon4: req.body.icon4,
+    icon1: {
+      techName: req.body.tech1Name,
+    },
+    icon2: {
+      techName: req.body.tech2Name,
+    },
+    icon3: {
+      techName: req.body.tech3Name,
+    },
+    icon4: {
+      techName: req.body.tech4Name,
+    },
+    icon5: {
+      techName: req.body.tech5Name,
+    },
   });
 
   post
