@@ -7,15 +7,16 @@ import {
   BLOGPOST_LOADING,
   SET_BLOGPOST_NOT_LOADING,
   SHUFFLE_BLOGPOSTS,
-} from "../types/blogPostTypes";
-import { cutArray } from "../../utils/helperMethods";
+} from '../types/blogPostTypes';
+import { cutArray } from '../../utils/helperMethods';
 
 const initialState = {
   blogPosts: [],
   loading: false,
 };
 
-export default function (state = initialState, action) {
+//Reducer
+function BlogPostReducer(state = initialState, action) {
   switch (action.type) {
     case GET_BLOGPOST:
       return {
@@ -63,13 +64,13 @@ export default function (state = initialState, action) {
         loading: false,
       };
     case SHUFFLE_BLOGPOSTS:
-      console.log("PROPS", action.payload.prop, action.payload.value);
+      console.log('PROPS', action.payload.prop, action.payload.value);
       const shuffledState = cutArray(
         state.blogPosts,
         action.payload.prop,
         action.payload.value
       );
-      console.log("SHUFFLED BLOGPOSTS", shuffledState);
+      console.log('SHUFFLED BLOGPOSTS', shuffledState);
       return {
         ...state,
         blogPosts: [...shuffledState],
@@ -79,3 +80,5 @@ export default function (state = initialState, action) {
       return state;
   }
 }
+
+export default BlogPostReducer;

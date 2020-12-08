@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import {
   Card,
@@ -22,7 +23,7 @@ const styles = {
   },
 };
 
-function MediaCard({
+function BlogPost({
   classes,
   image,
   title,
@@ -31,6 +32,7 @@ function MediaCard({
   deleteId,
   role,
   id,
+  blogPost,
 }) {
   const deleting = (id) => {
     deletePost(id);
@@ -63,9 +65,13 @@ function MediaCard({
           </CardContent>
         </NavLink>
       </CardActionArea>
-      {role === ROLE ? authButtons : null}
+      {role}
     </Card>
   );
 }
 
-export default withStyles(styles)(MediaCard);
+const mapStateToProps = (state) => ({
+  blogPost: state.blogPost,
+});
+
+export default withStyles(styles)(connect(mapStateToProps)(BlogPost));

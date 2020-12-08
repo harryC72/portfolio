@@ -1,11 +1,11 @@
-import { Router } from "express";
-import technology from "../models/Technology";
+import { Router } from 'express';
+import technology from '../models/Technology';
 
-import auth from "../middleware/auth.js";
+import auth from '../middleware/authMiddleware.js';
 
 const router = Router();
 
-router.get("/", (req, res) => {
+router.get('/', (req, res) => {
   technology
     .find()
     .then((data) => {
@@ -14,12 +14,12 @@ router.get("/", (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while getting technologies",
+          err.message || 'Some error occurred while getting technologies',
       });
     });
 });
 
-router.get("/:id", (req, res) => {
+router.get('/:id', (req, res) => {
   technology
     .find({ _id: req.params.id })
     .then((data) => {
@@ -28,12 +28,12 @@ router.get("/:id", (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while getting the technology",
+          err.message || 'Some error occurred while getting the technology',
       });
     });
 });
 
-router.post("/", (req, res) => {
+router.post('/', (req, res) => {
   // Validate request
   // if (!req.body.name || !req.body.image || !req.body.type) {
   //   return res.status(400).send({
@@ -41,7 +41,7 @@ router.post("/", (req, res) => {
   //   });
   // }
 
-  console.log("REQ BODY NAME", req.body);
+  console.log('REQ BODY NAME', req.body);
 
   const newTech = new technology({
     name: req.body.name,
@@ -52,19 +52,19 @@ router.post("/", (req, res) => {
   newTech
     .save()
     .then((data) => {
-      console.log("data", data);
+      console.log('data', data);
       res.send(data);
     })
     .catch((err) => {
       res.status(500).send({
         message:
           err.message ||
-          "Some error occurred while creating the new technology.",
+          'Some error occurred while creating the new technology.',
       });
     });
 });
 
-router.put("/:id", (req, res) => {
+router.put('/:id', (req, res) => {
   // Validate request
   // if (!req.body.bodyText) {
   //   return res.status(400).send({
@@ -91,12 +91,12 @@ router.put("/:id", (req, res) => {
     .catch((err) => {
       res.status(500).send({
         message:
-          err.message || "Some error occurred while updating the technology.",
+          err.message || 'Some error occurred while updating the technology.',
       });
     });
 });
 
-router.delete("/:id", (req, res) => {
+router.delete('/:id', (req, res) => {
   technology
     .findByIdAndDelete({
       _id: req.params.id,
@@ -112,7 +112,7 @@ router.delete("/:id", (req, res) => {
       res.status(500).send({
         message:
           err.message ||
-          "Some error occurred while trying to delete the technology",
+          'Some error occurred while trying to delete the technology',
       });
     });
 });
