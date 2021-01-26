@@ -1,24 +1,24 @@
-import React, { Fragment, useState } from "react";
-import { useHistory } from "react-router-dom";
-import { withStyles } from "@material-ui/core/styles";
-import { Alert, AlertTitle } from "@material-ui/lab";
-import { TextField, Button } from "@material-ui/core/";
-import { connect } from "react-redux";
-import { login } from "../../flux/actions/authActions";
+import React, { Fragment, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { withStyles } from '@material-ui/core/styles';
+import { Alert, AlertTitle } from '@material-ui/lab';
+import { TextField, Button } from '@material-ui/core/';
+import { connect } from 'react-redux';
+import { login } from '../../flux/actions/authActions';
 
 const styles = {
   root: {
-    "& .MuiTextField-root": {
-      margin: "20px 0 20px 0",
+    '& .MuiTextField-root': {
+      margin: '20px 0 20px 0',
     },
   },
 };
 
-const Login = ({ classes, login }) => {
+const Login = ({ classes, login, location }) => {
   let history = useHistory();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [msg, setMsg] = useState(null);
 
   const handleSubmit = async (e) => {
@@ -30,7 +30,7 @@ const Login = ({ classes, login }) => {
     };
     try {
       await login(loginUser);
-      history.push("/");
+      history.push(location.state.from);
     } catch (error) {
       setMsg(error.message);
     }
@@ -39,7 +39,7 @@ const Login = ({ classes, login }) => {
   return (
     <Fragment>
       {msg ? (
-        <Alert severity="error" onClose={() => setMsg(null)}>
+        <Alert severity='error' onClose={() => setMsg(null)}>
           <AlertTitle>Error</AlertTitle>
           {msg}
         </Alert>
@@ -47,32 +47,32 @@ const Login = ({ classes, login }) => {
       <form
         className={classes.root}
         noValidate
-        autoComplete="off"
+        autoComplete='off'
         onSubmit={handleSubmit}
-        method="post"
+        method='post'
       >
         <input
-          type="password"
-          name="fake-password"
-          autoComplete="new-password"
-          tabIndex="-1"
+          type='password'
+          name='fake-password'
+          autoComplete='new-password'
+          tabIndex='-1'
           style={{
             opacity: 0,
-            float: "left",
-            border: "none",
-            height: "0",
-            width: "0",
+            float: 'left',
+            border: 'none',
+            height: '0',
+            width: '0',
           }}
         />
 
         <div>
           <TextField
-            autoComplete="new-password"
-            type="email"
-            id="outlined-basic"
-            label="Email"
-            variant="outlined"
-            name="Email"
+            autoComplete='new-password'
+            type='email'
+            id='outlined-basic'
+            label='Email'
+            variant='outlined'
+            name='Email'
             onChange={(e) => {
               setEmail(e.target.value);
             }}
@@ -81,18 +81,18 @@ const Login = ({ classes, login }) => {
         </div>
         <div>
           <TextField
-            autoComplete="new-password"
-            type="password"
-            label="Password"
-            variant="outlined"
-            name="Password"
+            autoComplete='new-password'
+            type='password'
+            label='Password'
+            variant='outlined'
+            name='Password'
             onChange={(e) => {
               setPassword(e.target.value);
             }}
             value={password}
           />
         </div>
-        <Button type="submit">Login</Button>
+        <Button type='submit'>Login</Button>
       </form>
     </Fragment>
   );

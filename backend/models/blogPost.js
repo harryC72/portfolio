@@ -2,7 +2,10 @@ import mongoose from 'mongoose';
 var Schema = mongoose.Schema;
 
 let blogSchema = new Schema({
-  title: String, // String is shorthand for {type: String}
+  title: String, // String is shorthand for {type: String},
+  file: String,
+  alt: String,
+  ingress: String,
   bodyText: String,
   date: { type: Date, default: Date.now },
   hidden: Boolean,

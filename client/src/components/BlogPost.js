@@ -21,6 +21,9 @@ const styles = {
   media: {
     height: 140,
   },
+  nav: {
+    textDecoration: 'none',
+  },
 };
 
 function BlogPost({
@@ -41,14 +44,27 @@ function BlogPost({
   const authButtons = (
     <Fragment>
       <Button onClick={() => deleting(deleteId)}>Delete</Button>
-      <NavLink to={`/updateBlogPost/${deleteId}`}>Update</NavLink>
+      <Button>
+        <NavLink
+          className={classes.nav}
+          to={{
+            pathname: `/updateBlogPost/${deleteId}`,
+            blogPost: { title, bodyText },
+          }}
+        >
+          Update
+        </NavLink>
+      </Button>
     </Fragment>
   );
 
   return (
     <Card className={classes.root}>
       <CardActionArea>
-        <NavLink to={`/blogpost/${id}`}>
+        <NavLink
+          to={{ pathname: `/blogpost/${id}`, blogPost: { title, bodyText } }}
+          className={classes.nav}
+        >
           <CardMedia
             className={classes.media}
             image={image}
@@ -66,6 +82,7 @@ function BlogPost({
         </NavLink>
       </CardActionArea>
       {role}
+      {authButtons}
     </Card>
   );
 }

@@ -1,48 +1,48 @@
-import React, { Fragment } from "react";
-import { Switch, Route } from "react-router-dom";
-import Home from "./Home";
-import Blog from "./Blog";
-import Projects from "./Projects";
-import BlogUpdate from "./BlogUpdate";
-import BlogInput from "./BlogInput";
-import Register from "./auth/Register";
-import { ConnectedLogin } from "./auth/Login";
-import PageNotFound from "./PageNotFoundPage";
-import ProjectInput from "./ProjectInput";
-import { connect } from "react-redux";
-import { Redirect } from "react-router";
-import { login } from "../flux/actions/authActions";
-import PrivateRoute from "./PrivateRoute";
+import React, { Fragment } from 'react';
+import { Switch, Route } from 'react-router-dom';
+import Home from './Home';
+import Blog from './Blog';
+import Projects from './Projects';
+import BlogUpdate from './BlogUpdate';
+import BlogInput from './BlogInput';
+import Register from './auth/Register';
+import { ConnectedLogin } from './auth/Login';
+import PageNotFound from './PageNotFoundPage';
+import ProjectInput from './ProjectInput';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router';
+import { login } from '../flux/actions/authActions';
+import ProtectedRoute from './ProtectedRoute';
 
 const ReactRouter2 = ({ isAuthenticated }) => {
   return (
     <Fragment>
       <Switch>
-        <Route exact path="/">
+        <Route exact path='/'>
           <Home />
         </Route>
-        <Route path="/blog">
+        <Route path='/blog'>
           <Blog />
         </Route>
-        <Route path="/projects">
+        <Route path='/projects'>
           <Projects />
         </Route>
 
-        <Route path="/register">
+        <Route path='/register'>
           <Register />
         </Route>
-        <Route path="/login">
+        <Route path='/login'>
           <ConnectedLogin />
         </Route>
-        <PrivateRoute path="/addproject" isAuth={isAuthenticated}>
+        <ProtectedRoute path='/addproject'>
           <ProjectInput />
-        </PrivateRoute>
-        <PrivateRoute path="/addblogpost" isAuth={isAuthenticated}>
+        </ProtectedRoute>
+        <ProtectedRoute path='/addblogpost'>
           <BlogInput />
-        </PrivateRoute>
-        <PrivateRoute path="/updateBlogPost/:id" isAuth={isAuthenticated}>
+        </ProtectedRoute>
+        <ProtectedRoute path='/updateBlogPost/:id'>
           <BlogUpdate />
-        </PrivateRoute>
+        </ProtectedRoute>
         <Route>
           <PageNotFound />
         </Route>

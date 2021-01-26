@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import blogPost from '../models/blogPost.js';
+import { upload } from '../utils/fileUpload';
 
 import auth from '../middleware/authMiddleware.js';
 import {
@@ -12,9 +13,10 @@ const router = Router();
 router.route('/').get(getBlogPosts);
 router.route('/:id').get(getBlogPostById);
 
-router.route('/', auth).post(saveBlogPost);
+router.route('/', auth, upload.single('file')).post(saveBlogPost);
 
 router.put('/:id', auth, (req, res) => {
+  console.log('REQ', req.body, req.params);
   // Validate request
   if (!req.body.bodyText) {
     return res.status(400).send({

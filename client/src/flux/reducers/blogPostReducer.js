@@ -7,6 +7,12 @@ import {
   BLOGPOST_LOADING,
   SET_BLOGPOST_NOT_LOADING,
   SHUFFLE_BLOGPOSTS,
+  GET_BLOGPOST_REQUEST,
+  GET_BLOGPOST_SUCCESS,
+  GET_BLOGPOSTS_SUCCESS,
+  GET_BLOGPOSTS_REQUEST,
+  GET_BLOGPOST_FAILURE,
+  ADD_BLOGPOST_SUCCESS,
 } from '../types/blogPostTypes';
 import { cutArray } from '../../utils/helperMethods';
 
@@ -18,17 +24,21 @@ const initialState = {
 //Reducer
 function BlogPostReducer(state = initialState, action) {
   switch (action.type) {
-    case GET_BLOGPOST:
+    case GET_BLOGPOSTS_REQUEST:
+      return {
+        blogPosts: [],
+        loading: true,
+      };
+    case GET_BLOGPOSTS_SUCCESS:
       return {
         ...state,
         blogPosts: action.payload,
         loading: false,
       };
-    case GET_BLOGPOSTS:
+    case GET_BLOGPOST_FAILURE:
       return {
-        ...state,
-        blogPosts: action.payload,
         loading: false,
+        error: action.payload,
       };
     case DELETE_BLOGPOST:
       return {
@@ -38,11 +48,12 @@ function BlogPostReducer(state = initialState, action) {
         ),
         loading: false,
       };
-    case ADD_BLOGPOST:
+    case ADD_BLOGPOST_SUCCESS:
       return {
         ...state,
         blogPosts: [action.payload, ...state.blogPosts],
         loading: false,
+        message: `Blogpost id: ${action.payload._id} sucessfully added`,
       };
     case UPDATE_BLOGPOST:
       const newState = state.blogPosts.filter(

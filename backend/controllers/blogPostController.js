@@ -30,6 +30,9 @@ const saveBlogPost = (req, res) => {
 
   const post = new BlogPost({
     title: req.body.title || 'Untitled Note',
+    alt: req.body.alt,
+    file: `/images/${req.file.filename}`,
+    ingress: req.body.ingress,
     bodyText: req.body.bodyText,
   });
 

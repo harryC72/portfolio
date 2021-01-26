@@ -1,30 +1,36 @@
-import React, { useState, Fragment } from "react";
-import { withStyles } from "@material-ui/core/styles";
-import { TextField, Button } from "@material-ui/core/";
-import { Alert, AlertTitle } from "@material-ui/lab";
-import { connect } from "react-redux";
-import { addBlogPost } from "../flux/actions/blogPostActions";
+import React, { useState, Fragment } from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import { TextField, Button, Fab } from '@material-ui/core/';
+import AddIcon from '@material-ui/icons/Add';
+
+import { connect } from 'react-redux';
+import { addBlogPost } from '../flux/actions/blogPostActions';
+import PopUp from './PopUp';
 
 const styles = {
   root: {
-    "& .MuiTextField-root": {
-      margin: "20px 0 20px 0",
+    '& .MuiTextField-root': {
+      margin: '20px 0 20px 0',
     },
   },
 };
 
-export function BlogInput({ classes, addBlogPost, loading }) {
-  const [msg, setMsg] = useState(null);
+export function BlogInput({ classes, addBlogPost, blogPost }) {
   const [errors, setErrors] = useState({});
-
-  const [postTitle, setPostTitle] = useState("");
-  const [postBody, setPostBody] = useState("");
+  const [title, setTitle] = useState('');
+  const [ingress, setIngress] = useState('');
+  const [bodyText, setBodyText] = useState('');
+  const [file, setFile] = useState('');
+  const [alt, setAlt] = useState('');
 
   const formIsValid = () => {
     const errors = {};
 
-    if (!postTitle) errors.title = "Title is required";
-    if (!postBody) errors.body = "Body text is required";
+    if (!title) errors.title = 'Title is required';
+    if (!file) errors.file = 'Image is required';
+    if (!alt) errors.alt = 'Alternative image text is required';
+    if (!ingress) errors.ingress = 'Ingress is required';
+    if (!bodyText) errors.body = 'Body text is required';
 
     setErrors(errors);
 
@@ -34,64 +40,121 @@ export function BlogInput({ classes, addBlogPost, loading }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     const newPost = {
-      postTitle,
-      postBody,
+      title,
+      file,
+      alt,
+      ingress,
+      bodyText,
     };
+    console.log('INPUT', newPost);
     if (!formIsValid()) return;
-    addBlogPost(newPost)
-      .then(() => {
-        setPostTitle("");
-        setPostBody("");
-      })
-      .catch((err) => {
-        console.log("ERROR BLOGINPUT", Object.getOwnPropertyNames(err));
-        setMsg(err.message);
-      });
+    addBlogPost(newPost);
+    setTitle('');
+    setFile('');
+    setAlt('');
+    setIngress('');
+    setBodyText('');
   };
 
   const saveButton = () =>
-    loading ? (
-      <Button type="submit">Saving...</Button>
+    blogPost.loading ? (
+      <Button type='submit'>Saving...</Button>
     ) : (
-      <Button type="submit">Save</Button>
+      <Button type='submit'>Save</Button>
     );
 
   return (
     <Fragment>
-      {msg ? (
-        <Alert severity="error" onClose={() => setMsg(null)}>
-          <AlertTitle>Error</AlertTitle>
-          {msg}
-        </Alert>
+      {blogPost.error ? (
+        <PopUp severity='error' message={blogPost.error} />
+      ) : null}
+      {blogPost.message ? (
+        <PopUp severity='success' message={blogPost.message} />
       ) : null}
       <form
         className={classes.root}
         noValidate
-        autoComplete="off"
+        autoComplete='off'
         onSubmit={handleSubmit}
       >
         <div>
           <TextField
             // id="outlined-basic"
-            label="Blog post title"
-            variant="outlined"
-            name="PostTitle"
-            error={errors.postTitle ? true : false}
-            helperText={errors.postTitle === "" ? " " : errors.postTitle}
-            onChange={(e) => setPostTitle(e.target.value)}
+            label='Title'
+            variant='outlined'
+            name='title'
+            value={title}
+            error={errors.title ? true : false}
+            helperText={errors.titlse === '' ? ' ' : errors.title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </div>
+        <div>
+          <label htmlFor='upload-photo'>
+            <input
+              style={{ display: 'none' }}
+              id='upload-photo'
+              name='upload-photo'
+              type='file'
+              onChange={(e) => setFile(e.target.files[0])}
+            />
+            <Fab
+              color='secondary'
+              size='small'
+              component='span'
+              aria-label='add'
+              variant='extended'
+            >
+              <AddIcon /> Upload photo
+            </Fab>
+            <br />
+            <br />
+            <Fab color='primary' size='small' component='span' aria-label='add'>
+              <AddIcon />
+            </Fab>
+            <Button color='secondary' variant='contained' component='span'>
+              Upload button
+            </Button>{' '}
+          </label>
+        </div>
+        <div>
+          <TextField
+            // id="outlined-basic"
+            label='Alternative image text'
+            variant='outlined'
+            name='alt'
+            value={alt}
+            error={errors.alt ? true : false}
+            helperText={errors.alt === '' ? ' ' : errors.alt}
+            onChange={(e) => setAlt(e.target.value)}
           />
         </div>
         <div>
           <TextField
-            id="outlined-multiline-static"
-            label="Blog post body"
+            id='outlined-multiline-static'
+            label='Ingress'
             multiline
-            rows="4"
-            variant="outlined"
-            name="PostBody"
-            error={errors.postBody ? true : false}
-            helperText={errors.postBody === "" ? " " : errors.postBody}
-            onChange={(e) => setPostBody(e.target.value)}
+            rows='4'
+            variant='outlined'
+            name='ingress'
+            error={errors.ingress ? true : false}
+            value={ingress}
+            helperText={errors.ingress === '' ? ' ' : errors.ingress}
+            onChange={(e) => setIngress(e.target.value)}
+          />
+        </div>
+        <div>
+          <TextField
+            id='outlined-multiline-static'
+            label='Body text'
+            multiline
+            rows='4'
+            variant='outlined'
+            name='bodyText'
+            value={bodyText}
+            error={errors.bodyText ? true : false}
+            helperText={errors.bodyText === '' ? ' ' : errors.bodyText}
+            onChange={(e) => setBodyText(e.target.value)}
           />
         </div>
         {saveButton()}
@@ -102,7 +165,6 @@ export function BlogInput({ classes, addBlogPost, loading }) {
 
 const mapStateToProps = (state) => ({
   blogPost: state.blogPost,
-  loading: state.blogPost.loading,
 });
 
 export default withStyles(styles)(
