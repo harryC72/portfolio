@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 import {
   USER_LOADED,
   USER_LOADING,
@@ -6,7 +6,7 @@ import {
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
-} from "../types/authTypes";
+} from '../types/authTypes';
 
 // check token & load user
 
@@ -14,7 +14,7 @@ export const loadUser = () => (dispatch, getState) => {
   dispatch({ type: USER_LOADING });
 
   axios
-    .get("/auth/user", tokenConfig(getState))
+    .get('/auth/user', tokenConfig(getState))
     .then((res) =>
       dispatch({
         type: USER_LOADED,
@@ -34,15 +34,15 @@ export const tokenConfig = (getState) => {
 
   const config = {
     headers: {
-      "Content-type": "application/json",
+      'Content-type': 'application/json',
     },
   };
 
   if (token) {
-    config.headers["x-auth-token"] = token;
+    config.headers['x-auth-token'] = token;
   }
 
-  console.log("CONFIG", config);
+  console.log('CONFIG', config);
 
   return config;
 };
@@ -51,7 +51,7 @@ export const register = ({ name, email, password }) => (dispatch) => {
   // Headers
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   };
 
@@ -59,7 +59,7 @@ export const register = ({ name, email, password }) => (dispatch) => {
   const body = JSON.stringify({ name, email, password });
 
   return axios
-    .post("/auth/register", body, config)
+    .post('/auth/register', body, config)
     .then((res) =>
       dispatch({
         type: REGISTER_SUCCESS,
@@ -74,14 +74,14 @@ export const register = ({ name, email, password }) => (dispatch) => {
 export const login = ({ email, password }) => (dispatch) => {
   const config = {
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
   };
 
   const body = JSON.stringify({ email, password });
 
   return axios
-    .post("/auth/login", body, config)
+    .post('/auth/login', body, config)
     .then((res) =>
       dispatch({
         type: LOGIN_SUCCESS,

@@ -1,7 +1,7 @@
 import multer from 'multer';
 import uuidv4 from 'uuid';
 
-const DIR = './front-end/public/images/';
+const DIR = './client/public/uploads/images/';
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {

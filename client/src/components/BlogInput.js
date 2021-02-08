@@ -39,16 +39,8 @@ export function BlogInput({ classes, addBlogPost, blogPost }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newPost = {
-      title,
-      file,
-      alt,
-      ingress,
-      bodyText,
-    };
-    console.log('INPUT', newPost);
     if (!formIsValid()) return;
-    addBlogPost(newPost);
+    addBlogPost(title, file, alt, ingress, bodyText);
     setTitle('');
     setFile('');
     setAlt('');
@@ -99,7 +91,7 @@ export function BlogInput({ classes, addBlogPost, blogPost }) {
               onChange={(e) => setFile(e.target.files[0])}
             />
             <Fab
-              color='secondary'
+              color='primary'
               size='small'
               component='span'
               aria-label='add'
@@ -107,14 +99,6 @@ export function BlogInput({ classes, addBlogPost, blogPost }) {
             >
               <AddIcon /> Upload photo
             </Fab>
-            <br />
-            <br />
-            <Fab color='primary' size='small' component='span' aria-label='add'>
-              <AddIcon />
-            </Fab>
-            <Button color='secondary' variant='contained' component='span'>
-              Upload button
-            </Button>{' '}
           </label>
         </div>
         <div>

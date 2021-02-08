@@ -3,7 +3,10 @@ import {
   GET_BLOGPOST,
   GET_BLOGPOSTS,
   ADD_BLOGPOST_SUCCESS,
-  DELETE_BLOGPOST,
+  ADD_BLOGPOST_FAILURE,
+  DELETE_BLOGPOST_REQUEST,
+  DELETE_BLOGPOST_SUCCESS,
+  DELETE_BLOGPOST_FAILURE,
   UPDATE_BLOGPOST,
   SET_BLOGPOST_NOT_LOADING,
   SHUFFLE_BLOGPOSTS,
@@ -72,33 +75,74 @@ export const getBlogPosts = () => async (dispatch) => {
   }
 };
 
-export const addBlogPost = (blogPost) => (dispatch, getState) => {
-  dispatch(loadBlogPost());
-  return axios
-    .post('/blogposts', blogPost, tokenConfig(getState))
-    .then((res) => {
-      dispatch({
-        type: ADD_BLOGPOST_SUCCESS,
-        payload: res.data,
-      });
-      console.log(res.data);
-    })
-    .catch((err) => {
-      throw Error(err);
+export const addBlogPost = (
+  title,
+  file,
+  alt,
+  ingress,
+  bodyText,
+  date
+) => async (dispatch, getState) => {
+  try {
+    dispatch(loadBlogPost());
+
+    console.log('data from action', title, file, alt, ingress, bodyText);
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('title', title);
+    formData.append('alt', alt);
+    formData.append('ingress', ingress);
+    formData.append('bodyText', bodyText);
+
+    for (var pair of formData.entries()) {
+      console.log('FORMDATA', pair[0] + ', ' + pair[1]);
+    }
+
+    console.log('GET STATE FROM ACTION', getState());
+
+    const { data } = await axios.post(
+      '/blogposts',
+      formData,
+      tokenConfig(getState)
+    );
+
+    dispatch({
+      type: ADD_BLOGPOST_SUCCESS,
+      payload: data,
     });
+    console.log('addBlogPostAction', data);
+  } catch (error) {
+    dispatch({
+      type: ADD_BLOGPOST_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
 };
 
 export const deleteBlogPost = (id) => (dispatch, getState) => {
+  dispatch({
+    type: DELETE_BLOGPOST_REQUEST,
+  });
+
   axios
     .delete(`/blogposts/${id}`, tokenConfig(getState))
     .then((res) => {
       dispatch({
-        type: DELETE_BLOGPOST,
+        type: DELETE_BLOGPOST_SUCCESS,
         payload: id,
       });
     })
-    .catch((err) => {
-      throw Error(err);
+    .catch((error) => {
+      dispatch({
+        type: DELETE_BLOGPOST_FAILURE,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
     });
 };
 

@@ -30,7 +30,9 @@ const Login = ({ classes, login, location }) => {
     };
     try {
       await login(loginUser);
-      history.push(location.state.from);
+      location.state !== undefined
+        ? history.push(location.state.from)
+        : history.push('/');
     } catch (error) {
       setMsg(error.message);
     }

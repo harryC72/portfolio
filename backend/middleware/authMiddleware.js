@@ -1,13 +1,14 @@
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
 
 const secret = process.env.JWT_SECRET;
 
 export default (req, res, next) => {
-  const token = req.header("x-auth-token");
+  console.log(JSON.stringify(req.headers));
 
+  const token = req.header('x-auth-token');
   // Check for token
   if (!token)
-    return res.status(401).send({ msg: "No token, authorization denied" });
+    return res.status(401).send({ msg: 'No token, authorization denied' });
 
   try {
     // Verify token
@@ -16,6 +17,6 @@ export default (req, res, next) => {
     req.user = decoded;
     next();
   } catch (e) {
-    res.status(400).send("Token is not valid");
+    res.status(400).send('Token is not valid');
   }
 };

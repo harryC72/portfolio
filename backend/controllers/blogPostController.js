@@ -20,34 +20,4 @@ const getBlogPostById = asyncHandler(async (req, res) => {
   }
 });
 
-const saveBlogPost = (req, res) => {
-  // Validate request
-  if (!req.body.bodyText) {
-    return res.status(400).send({
-      message: 'Blogpost body text can not be empty',
-    });
-  }
-
-  const post = new BlogPost({
-    title: req.body.title || 'Untitled Note',
-    alt: req.body.alt,
-    file: `/images/${req.file.filename}`,
-    ingress: req.body.ingress,
-    bodyText: req.body.bodyText,
-  });
-
-  post
-    .save()
-    .then((data) => {
-      console.log('data', data);
-      res.send(data);
-    })
-    .catch((err) => {
-      res.status(500).send({
-        message:
-          err.message || 'Some error occurred while creating the blog post.',
-      });
-    });
-};
-
-export { getBlogPosts, getBlogPostById, saveBlogPost };
+export { getBlogPosts, getBlogPostById };
