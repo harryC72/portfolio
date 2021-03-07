@@ -2,10 +2,11 @@ import {
   USER_LOADED,
   USER_LOADING,
   LOGIN_SUCCESS,
-  LOADING_FAILURE,
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
-  REGISTER_FAIL,
+  REGISTER_FAILURE,
+  LOADING_FAILURE,
+  LOGIN_FAILURE,
 } from '../types/authTypes';
 
 const initialState = {
@@ -41,9 +42,10 @@ export default function (state = initialState, action) {
         isLoading: false,
       };
 
+    case LOGIN_FAILURE:
     case LOADING_FAILURE:
     case LOGOUT_SUCCESS:
-    case REGISTER_FAIL:
+    case REGISTER_FAILURE:
       localStorage.removeItem('token');
       return {
         ...state,
@@ -51,6 +53,7 @@ export default function (state = initialState, action) {
         user: null,
         isAuthenticated: false,
         isLoading: false,
+        error: action.payload,
       };
 
     default:

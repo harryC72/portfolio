@@ -5,6 +5,8 @@ import { Alert, AlertTitle } from '@material-ui/lab';
 import { TextField, Button } from '@material-ui/core/';
 import { connect } from 'react-redux';
 import { login } from '../../flux/actions/authActions';
+import Spinner from '../Spinner';
+import PopUp from '../PopUp';
 
 const styles = {
   root: {
@@ -14,94 +16,88 @@ const styles = {
   },
 };
 
-const Login = ({ classes, login, location }) => {
+const Login = ({ classes, login, location, auth }) => {
   let history = useHistory();
+
+  const { isLoading, error } = auth;
+
+  console.log('AUTH', auth);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [msg, setMsg] = useState(null);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
 
     const loginUser = {
       email,
       password,
     };
-    try {
-      await login(loginUser);
-      location.state !== undefined
-        ? history.push(location.state.from)
-        : history.push('/');
-    } catch (error) {
-      setMsg(error.message);
-    }
+    login(loginUser);
+    location.state !== undefined
+      ? history.push(location.state.from)
+      : history.push('/');
   };
 
-  return (
-    <Fragment>
-      {msg ? (
-        <Alert severity='error' onClose={() => setMsg(null)}>
-          <AlertTitle>Error</AlertTitle>
-          {msg}
-        </Alert>
-      ) : null}
-      <form
-        className={classes.root}
-        noValidate
-        autoComplete='off'
-        onSubmit={handleSubmit}
-        method='post'
-      >
-        <input
-          type='password'
-          name='fake-password'
-          autoComplete='new-password'
-          tabIndex='-1'
-          style={{
-            opacity: 0,
-            float: 'left',
-            border: 'none',
-            height: '0',
-            width: '0',
-          }}
-        />
+  if (error) return <PopUp severity='error' message={error} />;
+  if (isLoading) return <Spinner />;
 
-        <div>
-          <TextField
-            autoComplete='new-password'
-            type='email'
-            id='outlined-basic'
-            label='Email'
-            variant='outlined'
-            name='Email'
-            onChange={(e) => {
-              setEmail(e.target.value);
-            }}
-            value={email}
-          />
-        </div>
-        <div>
-          <TextField
-            autoComplete='new-password'
-            type='password'
-            label='Password'
-            variant='outlined'
-            name='Password'
-            onChange={(e) => {
-              setPassword(e.target.value);
-            }}
-            value={password}
-          />
-        </div>
-        <Button type='submit'>Login</Button>
-      </form>
-    </Fragment>
+  return (
+    <form
+      className={classes.root}
+      noValidate
+      autoComplete='off'
+      onSubmit={handleSubmit}
+      method='post'
+    >
+      <input
+        type='password'
+        name='fake-password'
+        autoComplete='new-password'
+        tabIndex='-1'
+        style={{
+          opacity: 0,
+          float: 'left',
+          border: 'none',
+          height: '0',
+          width: '0',
+        }}
+      />
+
+      <div>
+        <TextField
+          autoComplete='new-password'
+          type='email'
+          id='outlined-basic'
+          label='Email'
+          variant='outlined'
+          name='Email'
+          onChange={(e) => {
+            setEmail(e.target.value);
+          }}
+          value={email}
+        />
+      </div>
+      <div>
+        <TextField
+          autoComplete='new-password'
+          type='password'
+          label='Password'
+          variant='outlined'
+          name='Password'
+          onChange={(e) => {
+            setPassword(e.target.value);
+          }}
+          value={password}
+        />
+      </div>
+      <Button type='submit'>Login</Button>
+    </form>
   );
 };
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated,
+  auth: state.auth,
 });
 
 export const ConnectedLogin = withStyles(styles)(

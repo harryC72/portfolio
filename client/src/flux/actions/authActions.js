@@ -2,49 +2,34 @@ import axios from 'axios';
 import {
   USER_LOADED,
   USER_LOADING,
-  LOADING_FAILURE,
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
   REGISTER_SUCCESS,
+  LOADING_FAILURE,
+  LOGIN_FAILURE,
 } from '../types/authTypes';
+import tokenConfig from '../../utils/tokenConfig';
 
 // check token & load user
 
-export const loadUser = () => (dispatch, getState) => {
-  dispatch({ type: USER_LOADING });
+export const loadUser = () => async (dispatch, getState) => {
+  try {
+    dispatch({ type: USER_LOADING });
+    const { data } = await axios.get('/auth/user', tokenConfig(getState));
 
-  axios
-    .get('/auth/user', tokenConfig(getState))
-    .then((res) =>
-      dispatch({
-        type: USER_LOADED,
-        payload: res.data,
-      })
-    )
-    .catch((err) => {
-      console.log(err);
-      dispatch({
-        type: LOADING_FAILURE,
-      });
+    dispatch({
+      type: USER_LOADED,
+      payload: data,
     });
-};
-
-export const tokenConfig = (getState) => {
-  const token = getState().auth.token;
-
-  const config = {
-    headers: {
-      'Content-type': 'application/json',
-    },
-  };
-
-  if (token) {
-    config.headers['x-auth-token'] = token;
+  } catch (error) {
+    dispatch({
+      type: LOADING_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
   }
-
-  console.log('CONFIG', config);
-
-  return config;
 };
 
 export const register = ({ name, email, password }) => (dispatch) => {
@@ -71,7 +56,7 @@ export const register = ({ name, email, password }) => (dispatch) => {
     });
 };
 
-export const login = ({ email, password }) => (dispatch) => {
+export const login = ({ email, password }) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -80,17 +65,24 @@ export const login = ({ email, password }) => (dispatch) => {
 
   const body = JSON.stringify({ email, password });
 
-  return axios
-    .post('/auth/login', body, config)
-    .then((res) =>
-      dispatch({
-        type: LOGIN_SUCCESS,
-        payload: res.data,
-      })
-    )
-    .catch((err) => {
-      throw Error(err);
+  try {
+    dispatch({ type: USER_LOADING });
+
+    const { data } = axios.post('/auth/login', body, config);
+
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: data,
     });
+  } catch (error) {
+    dispatch({
+      type: LOGIN_FAILURE,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
 };
 
 export const logout = () => {

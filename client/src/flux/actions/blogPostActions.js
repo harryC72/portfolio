@@ -18,7 +18,7 @@ import {
   GET_BLOGPOSTS_FAILURE,
 } from '../types/blogPostTypes';
 import axios from 'axios';
-import { tokenConfig } from './authActions';
+import tokenConfig from '../../utils/tokenConfig';
 
 export const loadBlogPost = () => {
   return {

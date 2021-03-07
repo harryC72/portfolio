@@ -6,9 +6,9 @@ import {
   DELETE_PROJECT,
   PROJECT_LOADING,
   SET_PROJECT_NOT_LOADING,
-} from "../types/projectTypes";
-import axios from "axios";
-import { tokenConfig } from "./authActions";
+} from '../types/projectTypes';
+import axios from 'axios';
+import tokenConfig from '../../utils/tokenConfig';
 
 export const loadProject = () => {
   return {
@@ -34,7 +34,7 @@ export const getProject = (id) => (dispatch) => {
 
 export const getProjects = () => (dispatch) => {
   // dispatch(loadProject());
-  axios.get("/projects").then((res) => {
+  axios.get('/projects').then((res) => {
     dispatch({
       type: GET_PROJECTS,
       payload: res.data,
@@ -45,9 +45,9 @@ export const getProjects = () => (dispatch) => {
 export const addProject = (project) => (dispatch) => {
   dispatch(loadProject());
   return axios
-    .post("/projects", project)
+    .post('/projects', project)
     .then((res) => {
-      console.log("PROJECT IN ACTION", project);
+      console.log('PROJECT IN ACTION', project);
       dispatch({
         type: ADD_PROJECT,
         payload: res.data,

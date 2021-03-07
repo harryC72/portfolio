@@ -7,9 +7,9 @@ import {
   UPDATE_TECHNOLOGY,
   SET_TECHNOLOGY_NOT_LOADING,
   SHUFFLE_TECHNOLOGIES,
-} from "../types/technologyTypes";
-import axios from "axios";
-import { tokenConfig } from "./authActions";
+} from '../types/technologyTypes';
+import axios from 'axios';
+import tokenConfig from '../../utils/tokenConfig';
 
 export const loadTechnology = () => {
   return {
@@ -41,7 +41,7 @@ export const getTechnology = (id) => (dispatch) => {
 export const getTechnologies = () => (dispatch) => {
   dispatch(loadTechnology());
   axios
-    .get("/technologies")
+    .get('/technologies')
     .then((res) => {
       dispatch({
         type: GET_TECHNOLOGIES,
@@ -56,7 +56,7 @@ export const getTechnologies = () => (dispatch) => {
 export const addTechnology = (technology) => (dispatch, getState) => {
   dispatch(loadTechnology());
   return axios
-    .post("/technologies", technology, tokenConfig(getState))
+    .post('/technologies', technology, tokenConfig(getState))
     .then((res) => {
       dispatch({
         type: ADD_TECHNOLOGY,
